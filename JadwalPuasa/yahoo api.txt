@@ -1,0 +1,6 @@
+https://developer.yahoo.com/wsregapp/
+JVLfWDbV34E8pUly0CzKeYmiOufu616yMG4vy2ErtluuLbekz_JnOZz.ZQ--
+
+http://www.earthtools.org/timezone-1.1/40.71417/-74.00639
+
+http://local.yahooapis.com/MapsService/V1/geocode?appid=JVLfWDbV34E8pUly0CzKeYmiOufu616yMG4vy2ErtluuLbekz_JnOZz.ZQ--&city=jakarta

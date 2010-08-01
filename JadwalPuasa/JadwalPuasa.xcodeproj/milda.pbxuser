@@ -1,0 +1,358 @@
+// !$*UTF8*$!
+{
+	1D3623240D0F684500981E51 /* JadwalPuasaAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {743, 364}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 491}";
+		};
+	};
+	1D3623250D0F684500981E51 /* JadwalPuasaAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1965, 1183}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 708}";
+		};
+	};
+	1D6058900D05DD3D006BFB54 /* JadwalPuasa */ = {
+		activeExec = 0;
+		executables = (
+			A0074F0D1200209F00ED0E64 /* JadwalPuasa */,
+		);
+	};
+	289233A80DB2D0DB0083E9F9 /* MainViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {747, 364}}";
+			sepNavSelRange = "{636, 0}";
+			sepNavVisRange = "{0, 642}";
+		};
+	};
+	289233A90DB2D0DB0083E9F9 /* MainViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {894, 1378}}";
+			sepNavSelRange = "{2442, 0}";
+			sepNavVisRange = "{687, 807}";
+		};
+	};
+	289233AC0DB2D0DB0083E9F9 /* FlipsideViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {743, 359}}";
+			sepNavSelRange = "{195, 0}";
+			sepNavVisRange = "{0, 582}";
+		};
+	};
+	289233AD0DB2D0DB0083E9F9 /* FlipsideViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {743, 754}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 473}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = A0074F0D1200209F00ED0E64 /* JadwalPuasa */;
+		activeSDKPreference = iphonesimulator4.0;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* JadwalPuasa */;
+		addToTargets = (
+			1D6058900D05DD3D006BFB54 /* JadwalPuasa */,
+		);
+		breakpoints = (
+			A04DC897120533E7003AB64A /* MainViewController.m:44 */,
+		);
+		codeSenseManager = A0074F1F120020B700ED0E64 /* Code sense */;
+		executables = (
+			A0074F0D1200209F00ED0E64 /* JadwalPuasa */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					565,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					525,
+					60,
+					20,
+					48,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 302280358;
+			PBXWorkspaceStateSaveDate = 302280358;
+		};
+		perUserProjectItems = {
+			A007501B1200447D00ED0E64 /* PBXTextBookmark */ = A007501B1200447D00ED0E64 /* PBXTextBookmark */;
+			A0075026120047DE00ED0E64 /* PBXTextBookmark */ = A0075026120047DE00ED0E64 /* PBXTextBookmark */;
+			A007504612004F6A00ED0E64 /* PBXTextBookmark */ = A007504612004F6A00ED0E64 /* PBXTextBookmark */;
+			A007504712004F6A00ED0E64 /* PBXTextBookmark */ = A007504712004F6A00ED0E64 /* PBXTextBookmark */;
+			A007504812004F6A00ED0E64 /* PBXTextBookmark */ = A007504812004F6A00ED0E64 /* PBXTextBookmark */;
+			A04DC88612053036003AB64A /* PBXTextBookmark */ = A04DC88612053036003AB64A /* PBXTextBookmark */;
+			A04DC88712053036003AB64A /* PBXTextBookmark */ = A04DC88712053036003AB64A /* PBXTextBookmark */;
+			A04DC88812053036003AB64A /* PBXTextBookmark */ = A04DC88812053036003AB64A /* PBXTextBookmark */;
+			A04DC88912053036003AB64A /* PBXTextBookmark */ = A04DC88912053036003AB64A /* PBXTextBookmark */;
+			A04DC8901205327B003AB64A /* PBXTextBookmark */ = A04DC8901205327B003AB64A /* PBXTextBookmark */;
+			A04DC89D120533F5003AB64A /* PBXTextBookmark */ = A04DC89D120533F5003AB64A /* PBXTextBookmark */;
+			A04DC8A71205D742003AB64A /* PBXTextBookmark */ = A04DC8A71205D742003AB64A /* PBXTextBookmark */;
+		};
+		sourceControlManager = A0074F1E120020B700ED0E64 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	A0074F0D1200209F00ED0E64 /* JadwalPuasa */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 1;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = JadwalPuasa;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	A0074F1E120020B700ED0E64 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	A0074F1F120020B700ED0E64 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	A0074F3212002B8200ED0E64 /* prayTime.js */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {743, 8489}}";
+			sepNavSelRange = "{232, 0}";
+			sepNavVisRange = "{14598, 851}";
+		};
+	};
+	A0074FCB120039B400ED0E64 /* PrayerTimeJs.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {943, 359}}";
+			sepNavSelRange = "{368, 0}";
+			sepNavVisRange = "{0, 448}";
+		};
+	};
+	A0074FCC120039B400ED0E64 /* PrayerTimeJs.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1419, 676}}";
+			sepNavSelRange = "{1186, 0}";
+			sepNavVisRange = "{362, 1043}";
+		};
+	};
+	A007501B1200447D00ED0E64 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A007501C1200447D00ED0E64 /* NSDate.h */;
+		name = "NSDate.h: 15";
+		rLen = 51;
+		rLoc = 299;
+		rType = 0;
+		vrLen = 747;
+		vrLoc = 0;
+	};
+	A007501C1200447D00ED0E64 /* NSDate.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = NSDate.h;
+		path = /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSDate.h;
+		sourceTree = "<absolute>";
+	};
+	A0075026120047DE00ED0E64 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A0074FCB120039B400ED0E64 /* PrayerTimeJs.h */;
+		name = "PrayerTimeJs.h: 17";
+		rLen = 0;
+		rLoc = 368;
+		rType = 0;
+		vrLen = 448;
+		vrLoc = 0;
+	};
+	A007504612004F6A00ED0E64 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A0074FCC120039B400ED0E64 /* PrayerTimeJs.m */;
+		name = "PrayerTimeJs.m: 38";
+		rLen = 0;
+		rLoc = 1186;
+		rType = 0;
+		vrLen = 1043;
+		vrLoc = 362;
+	};
+	A007504712004F6A00ED0E64 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 289233AD0DB2D0DB0083E9F9 /* FlipsideViewController.m */;
+		name = "FlipsideViewController.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 473;
+		vrLoc = 0;
+	};
+	A007504812004F6A00ED0E64 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A0074F3212002B8200ED0E64 /* prayTime.js */;
+		name = "prayTime.js: 8";
+		rLen = 0;
+		rLoc = 232;
+		rType = 0;
+		vrLen = 851;
+		vrLoc = 14598;
+	};
+	A04DC81F120474CB003AB64A /* DayViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {743, 364}}";
+			sepNavSelRange = "{688, 0}";
+			sepNavVisRange = "{0, 700}";
+		};
+	};
+	A04DC820120474CB003AB64A /* DayViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1146, 897}}";
+			sepNavSelRange = "{1390, 0}";
+			sepNavVisRange = "{1118, 573}";
+		};
+	};
+	A04DC88612053036003AB64A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* JadwalPuasaAppDelegate.m */;
+		name = "JadwalPuasaAppDelegate.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 708;
+		vrLoc = 0;
+	};
+	A04DC88712053036003AB64A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623240D0F684500981E51 /* JadwalPuasaAppDelegate.h */;
+		name = "JadwalPuasaAppDelegate.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 491;
+		vrLoc = 0;
+	};
+	A04DC88812053036003AB64A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A04DC81F120474CB003AB64A /* DayViewController.h */;
+		name = "DayViewController.h: 24";
+		rLen = 0;
+		rLoc = 688;
+		rType = 0;
+		vrLen = 700;
+		vrLoc = 0;
+	};
+	A04DC88912053036003AB64A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = A04DC820120474CB003AB64A /* DayViewController.m */;
+		name = "DayViewController.m: 42";
+		rLen = 0;
+		rLoc = 1390;
+		rType = 0;
+		vrLen = 730;
+		vrLoc = 672;
+	};
+	A04DC8901205327B003AB64A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 289233A80DB2D0DB0083E9F9 /* MainViewController.h */;
+		name = "MainViewController.h: 21";
+		rLen = 0;
+		rLoc = 636;
+		rType = 0;
+		vrLen = 642;
+		vrLoc = 0;
+	};
+	A04DC897120533E7003AB64A /* MainViewController.m:44 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */;
+		functionName = "-loadScrollViewWithPage:";
+		hitCount = 2;
+		ignoreCount = 0;
+		lineNumber = 44;
+		location = JadwalPuasa;
+		modificationTime = 302330965.003619;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	A04DC89D120533F5003AB64A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */;
+		name = "MainViewController.m: 87";
+		rLen = 0;
+		rLoc = 2442;
+		rType = 0;
+		vrLen = 714;
+		vrLoc = 566;
+	};
+	A04DC8A71205D742003AB64A /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */;
+		name = "MainViewController.m: 87";
+		rLen = 0;
+		rLoc = 2442;
+		rType = 0;
+		vrLen = 807;
+		vrLoc = 687;
+	};
+}
