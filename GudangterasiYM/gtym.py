@@ -398,7 +398,7 @@ class YMGoogleerBot(YMSession):
 
     @staticmethod
     def autotranslate(query):
-        langcode_from = self.detectlanguage(query)
+        langcode_from = YMGoogleerBot.detectlanguage(query)
         langcode_to = 'en'
         if langcode_from == 'en':
             langcode_to = 'id'
