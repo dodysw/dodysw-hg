@@ -27,7 +27,8 @@ CONSUMER_SECRET = "1822a3db9b80e117a731ea288998d513244c0249"
 class SimpleOAuth:
     """Generate correct Authoriation header based on consumer key&secret, oauth_token&secret"""
 
-    def __init__(self, oauth_consumer_key, oauth_consumer_secret, oauth_token="", oauth_token_secret="", realm=None):
+    def __init__(self, oauth_server, oauth_consumer_key, oauth_consumer_secret, oauth_token="", oauth_token_secret="", realm=None):
+        self.oauth_server = oauth_server
         self.oauth_consumer_key = oauth_consumer_key
         self.oauth_consumer_secret = oauth_consumer_secret
         if realm is None:
@@ -35,8 +36,32 @@ class SimpleOAuth:
         self.realm = realm
         self.oauth_token = oauth_token
         self.oauth_token_secret = oauth_token_secret
+        #init token
+        self.updateTokenAccess()
+
+    def updateTokenAccess(self):
+        """Sign all keys to get a new token and token secret, must redo after oauth_expires_in second
+        """
+        headers = self.getHeaderNoCheck()
+        req = urllib2.Request(self.oauth_server, None, headers)
+        try:
+            o = urllib2.urlopen(req)
+            resp = o.read()
+            self.access_token = dict([el.split("=") for el in resp.split("&")])
+            print "Access token", self.access_token
+            self.last_token_update = time.time()
+            self.updateToken(self.access_token['oauth_token'], self.access_token['oauth_token_secret'])
+            return True
+        except urllib2.HTTPError, e:
+            self._handleHttpError(e)
+        return False
 
     def getHeader(self):
+        if time.time() > (self.last_token_update + int(self.access_token['oauth_expires_in'])):
+            self.updateTokenAccess()
+        return self.getHeaderNoCheck()
+
+    def getHeaderNoCheck(self):
         headers = {}
         headers["Authorization"] ="""OAuth realm="%s",oauth_consumer_key="%s",oauth_signature_method="PLAINTEXT",oauth_nonce="%s",oauth_timestamp="%s",oauth_signature="%s",oauth_token="%s",oauth_version="1.0\"""" % (
             self.realm,
@@ -69,7 +94,8 @@ class SimpleOAuth:
 
 ACCESS_SERVER = "http://developer.messenger.yahooapis.com"
 CONTENT_TYPE = "application/json;charset=utf-8"
-
+OAUTH_SERVER = "https://api.login.yahoo.com/oauth/v2/get_token"
+        
 class YMSession:
     """Manage the life of yahoo messenger session"""
 
@@ -78,11 +104,11 @@ class YMSession:
         self.consumer_secret = consumer_secret
         self.last_sequence = 0
         self.part_token = None
-        self.oauth = SimpleOAuth(self.consumer_key, self.consumer_secret)
+
         if not self.initPart(userid, password):
             raise Exception, "Unable to init PART token"
-        if not self.initOAuth():
-            raise Exception, "Unable to init OAuth token"
+        self.initOAuth()
+
             
         self.contacts = None    
         
@@ -109,19 +135,7 @@ class YMSession:
         print ">initOauth"
         if part_token is not None:
             self.part_token = part_token
-        uri = "https://api.login.yahoo.com/oauth/v2/get_token"
-        self.oauth.updateToken(self.part_token)
-        headers = self.oauth.getHeader()
-        req = urllib2.Request(uri, None, headers)
-        try:
-            o = urllib2.urlopen(req)
-            resp = o.read()
-            self.access_token = dict([el.split("=") for el in resp.split("&")])
-            self.oauth.updateToken(self.access_token['oauth_token'], self.access_token['oauth_token_secret'])
-            return True
-        except urllib2.HTTPError, e:
-            self._handleHttpError(e)
-        return False
+        self.oauth = SimpleOAuth(OAUTH_SERVER, self.consumer_key, self.consumer_secret, self.part_token)
         
     #init session
     def login(self, presence_state=0, presence_message=""):
@@ -158,7 +172,7 @@ class YMSession:
         return False
     
     """
-    Call every 60 minutes to keep session alive
+    Call before 60 minutes to keep session alive
     """
     def keepAlive(self):
         print ">keepalive"
@@ -171,7 +185,7 @@ class YMSession:
             o = urllib2.urlopen(req)
             self.notify_token = o.headers['set-cookie'].split(";")[0].split("=")[1]
             print "Cookie:",o.headers['set-cookie']
-            self.session_expired_time = time.time() + 3600  #mark time when session will expire
+            self.session_expired_time = time.time() + 3600 - 120 - 60  #mark time when session will expire, 120 is default idle time of main loop, 60 is safety guard
             return True
         except urllib2.HTTPError, e:
             self._handleHttpError(e)
@@ -289,6 +303,9 @@ class YMSession:
                 print "Error HTTP %s, code: %s detail: %s description: %s" % (e.code, data['error']['code'], data['error']['detail'], data['error']['description'])
                 if data['error']['code'] == 28:
                     self.login()
+                elif e.code == 401:
+                    # token might've expired
+                    pass         
             except ValueError:
                 print e, buff
 
@@ -306,7 +323,7 @@ class YMGoogleerBot(YMSession):
             print self.contacts
             return
         print "=======%s: %s" % (obj['sender'], obj['msg'])
-        self.sendMessage(obj['sender'], self.google(obj['msg']))
+        self.sendMessage(obj['sender'], "'%s'\n%s" % (self.autotranslate(obj['msg']), self.google(obj['msg'])))
         
     def on_buddyAuthorize_event(self, obj):
         print "=======%s has asked me as buddy" % (obj['sender'])
@@ -320,11 +337,27 @@ class YMGoogleerBot(YMSession):
         for buddy in obj['contact']:
             print "=======%s buddy info. Presence: %s msg: %s" % (buddy['sender'], buddy['presenceState'], buddy.get('presenceMessage', ''))    
 
-
     def on_buddyStatus_event(self, obj):
         print "=======%s status. Presence: %s msg: %s" % (obj['sender'], obj['presenceState'], obj.get('presenceMessage', ''))
 
+    def on_disconnect_event(self, obj):
+        """
+        Reason code
+        1 = Regen: This user session has been expired because of login elsewhere.
+        2 = Idle: This user session has been expired because of idleness.
+        3 = Queue Full: This user session has been expired because messages in the session notification queue are not fetched.
+        4 = Self-initiated Logoff: When the user does an explicit logoff. 
+        """
+        print "=======Session disconnected, reason: %s" % obj['reason']
+        #force relogin...
+        self.login()
+        
+    def on_offlineMessage_event(self, obj):
+        print "=======Offline messages"
+        self.sendMessage(obj['sender'], "'%s'\n%s" % (self.autotranslate(obj['msg']), self.google(obj['msg'])))
 
+        for m in obj['messages']:
+            print "=======* %s: %s" % (m['message']['sender'], m['message']['msg'])
 
     def mainLoop(self):
        self.shutdown = False
@@ -354,6 +387,32 @@ class YMGoogleerBot(YMSession):
     @staticmethod
     def unescape(s):
         return reduce(lambda orig, repl: orig.replace(*repl), (("&lt;", "<"), ("&gt;", ">"), ("&#39;", "'"), ("&quot;", '"'), ("&amp;", "&"), ("<b>", ""), ("</b>", "")), s)
+        
+    @staticmethod
+    def detectlanguage(query):
+        o = urllib2.urlopen('http://ajax.googleapis.com/ajax/services/language/detect?v=1.0&%s' % (urllib.urlencode({'q' : query.encode("utf-8")})))
+        if o.code == 200:
+            body = o.read()
+            langcode = json.loads(body)['responseData']['language']
+            return langcode
+
+    @staticmethod
+    def autotranslate(query):
+        langcode_from = self.detectlanguage(query)
+        langcode_to = 'en'
+        if langcode_from == 'en':
+            langcode_to = 'id'
+        o = urllib2.urlopen('http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&%s&langpair=%s|%s' % (urllib.urlencode({'q' : query.encode("utf-8")}), langcode_from, langcode_to))
+        if o.code == 200:
+            body = o.read()
+            resp = json.loads(body)
+            if resp['responseData'] is None:
+                translated_text = resp['responseDetails']
+            else:    
+                translated_text = resp['responseData']['translatedText']
+            reply = translated_text
+        print "Replied with:%s" % reply
+        return reply
 
 if __name__ == "__main__":
     import sys
