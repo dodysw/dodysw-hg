@@ -67,7 +67,7 @@ class SimpleOAuth:
         return urllib.quote(s, safe='~')
     # end snippet
 
-SERVER_ADDRESS = "http://developer.messenger.yahooapis.com"
+ACCESS_SERVER = "http://developer.messenger.yahooapis.com"
 CONTENT_TYPE = "application/json;charset=utf-8"
 
 class YMSession:
@@ -126,7 +126,7 @@ class YMSession:
     #init session
     def login(self, presence_state=0, presence_message=""):
         print ">login"
-        uri = "%s/v1/session?notifyServerToken=%s" % (SERVER_ADDRESS, 1)
+        uri = "%s/v1/session?notifyServerToken=%s" % (ACCESS_SERVER, 1)
         headers = self.oauth.getHeader()
         headers['Content-type'] = CONTENT_TYPE
         body = json.dumps({"presenceState": presence_state, "presenceMessage": presence_message})
@@ -136,6 +136,7 @@ class YMSession:
             self.notify_token = o.headers['set-cookie'].split(";")[0].split("=")[1]
             resp = o.read()
             self.login_data = json.loads(resp)
+            print "server:%s notifyserver:%s" % (self.login_data['server'], self.login_data['notifyServer'])
             self.session_expired_time = time.time() + 3600  #mark time when session will expire
             return True
         except urllib2.HTTPError, e:
@@ -144,7 +145,7 @@ class YMSession:
         
     def logout(self):
         print ">logout"
-        uri = "%s/v1/session?sid=%s" % (SERVER_ADDRESS, self.login_data['sessionId'])
+        uri = "http://%s/v1/session?sid=%s" % (self.login_data['server'], self.login_data['sessionId'])
         headers = self.oauth.getHeader()
         headers['Content-type'] = CONTENT_TYPE
         req = urllib2.Request(uri, None, headers)
@@ -161,7 +162,7 @@ class YMSession:
     """
     def keepAlive(self):
         print ">keepalive"
-        uri = "%s/v1/keepalive?sid=%s&notifyServerToken=%s" % (self.login_data['notifyServer'], self.login_data['sessionId'], 1)
+        uri = "http://%s/v1/keepalive?sid=%s&notifyServerToken=%s" % (self.login_data['server'], self.login_data['sessionId'], 1)
         headers = self.oauth.getHeader()
         headers['Content-type'] = CONTENT_TYPE
         req = urllib2.Request(uri, None, headers)
@@ -182,7 +183,7 @@ class YMSession:
             return self.keepAlive()
     
     def sendMessage(self, send_to_yahooid, message):
-        uri = "%s/v1/message/yahoo/%s?sid=%s" % (SERVER_ADDRESS, send_to_yahooid, self.login_data['sessionId'])
+        uri = "http://%s/v1/message/yahoo/%s?sid=%s" % (self.login_data['server'], send_to_yahooid, self.login_data['sessionId'])
         headers = self.oauth.getHeader()
         headers['Content-type'] = CONTENT_TYPE
         body = json.dumps({"message": message})
@@ -195,7 +196,7 @@ class YMSession:
         return False
     
     def fetchContactList(self):
-        uri = "%s/v1/contacts?sid=%s&fields=%%2Bpresence&fields=%%2Bgroups" % (SERVER_ADDRESS, self.login_data['sessionId'])
+        uri = "http://%s/v1/contacts?sid=%s&fields=%%2Bpresence&fields=%%2Bgroups" % (self.login_data['server'], self.login_data['sessionId'])
         headers = self.oauth.getHeader()
         req = urllib2.Request(uri, None, headers)
         try:
@@ -210,7 +211,7 @@ class YMSession:
     
     def replyBuddyRequest(self, buddy_userid, accepted=True, message=""):
         print ">replyBuddyRequest"
-        uri = "%s/v1/buddyrequest/yahoo/%s?sid=%s" % (SERVER_ADDRESS, buddy_userid, self.login_data['sessionId'])
+        uri = "http://%s/v1/buddyrequest/yahoo/%s?sid=%s" % (self.login_data['server'], buddy_userid, self.login_data['sessionId'])
         headers = self.oauth.getHeader()
         headers['Content-type'] = CONTENT_TYPE
         body = json.dumps({"authReason": message.encode("utf-8")})
@@ -230,7 +231,7 @@ class YMSession:
     def pollNotification(self, sequence=None, count=10):
         if sequence is None:
             sequence = sef.last_sequence + 1
-        uri = "%s/v1/notifications?sid=%s&seq=%s&count=%s" % (SERVER_ADDRESS, self.login_data['sessionId'], sequence, count)
+        uri = "http://%s/v1/notifications?sid=%s&seq=%s&count=%s" % (self.login_data['server'], self.login_data['sessionId'], sequence, count)
         headers = self.oauth.getHeader()
         req = urllib2.Request(uri, None, headers)
         try:
@@ -311,6 +312,19 @@ class YMGoogleerBot(YMSession):
         print "=======%s has asked me as buddy" % (obj['sender'])
         self.replyBuddyRequest(obj['sender'], accepted=True, message="Welcome.")
         self.sendMessage(obj['sender'], "Thanks for adding me. Ask me anything and I will google it for you. For help, contact developer at dodysw@gmail.com.")
+        
+    def on_logOff_event(self, obj):
+        print "=======%s logged off" % (obj['buddy'])
+
+    def on_buddyInfo_event(self, obj):
+        for buddy in obj['contact']:
+            print "=======%s buddy info. Presence: %s msg: %s" % (buddy['sender'], buddy['presenceState'], buddy.get('presenceMessage', ''))    
+
+
+    def on_buddyStatus_event(self, obj):
+        print "=======%s status. Presence: %s msg: %s" % (obj['sender'], obj['presenceState'], obj.get('presenceMessage', ''))
+
+
 
     def mainLoop(self):
        self.shutdown = False
