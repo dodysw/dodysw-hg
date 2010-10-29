@@ -36,13 +36,18 @@ class SimpleOAuth:
         self.realm = realm
         self.oauth_token = oauth_token
         self.oauth_token_secret = oauth_token_secret
+        
         #init token
-        self.updateTokenAccess()
+        self.fetchAccessToken()
 
-    def updateTokenAccess(self):
+    def fetchAccessToken(self, refreshing=False):
         """Sign all keys to get a new token and token secret, must redo after oauth_expires_in second
         """
-        headers = self.getHeaderNoCheck()
+        headers = self.getHeader()
+        if refreshing:
+            self.oauth_token_secret = ""
+            headers["Authorization"] += ',oauth_session_handle="%s"' % self.access_token['oauth_session_handle']
+        print headers
         req = urllib2.Request(self.oauth_server, None, headers)
         try:
             o = urllib2.urlopen(req)
@@ -50,20 +55,26 @@ class SimpleOAuth:
             self.access_token = dict([el.split("=") for el in resp.split("&")])
             print "Access token", self.access_token
             self.last_token_update = time.time()
-            self.updateToken(self.access_token['oauth_token'], self.access_token['oauth_token_secret'])
+            self.oauth_token = self.access_token['oauth_token']
+            self.oauth_token_secret = self.access_token['oauth_token_secret']
             return True
         except urllib2.HTTPError, e:
-            self._handleHttpError(e)
+            raise
         return False
-
+        
+    def isTokenNeedRefresh(self):
+        return time.time() > (self.last_token_update + int(self.access_token['oauth_expires_in']))
+        
+    def refreshAccessToken(self):
+        """OAuth token must be refreshed after Oauth is expired
+        http://developer.yahoo.com/messenger/guide/ch05s05.html#d4e5347
+        """
+        print ">refreshing OAuth"
+        self.fetchAccessToken(refreshing=True)
+        
     def getHeader(self):
-        if time.time() > (self.last_token_update + int(self.access_token['oauth_expires_in'])):
-            self.updateTokenAccess()
-        return self.getHeaderNoCheck()
-
-    def getHeaderNoCheck(self):
         headers = {}
-        headers["Authorization"] ="""OAuth realm="%s",oauth_consumer_key="%s",oauth_signature_method="PLAINTEXT",oauth_nonce="%s",oauth_timestamp="%s",oauth_signature="%s",oauth_token="%s",oauth_version="1.0\"""" % (
+        headers["Authorization"] ='OAuth realm="%s",oauth_consumer_key="%s",oauth_signature_method="PLAINTEXT",oauth_nonce="%s",oauth_timestamp="%s",oauth_signature="%s",oauth_token="%s",oauth_version="1.0"' % (
             self.realm,
             self.escape(self.oauth_consumer_key), 
             self.escape(self.generate_nonce()), 
@@ -71,12 +82,7 @@ class SimpleOAuth:
             self.escape("%s&%s" % (self.oauth_consumer_secret,self.oauth_token_secret)), 
             self.oauth_token)
         return headers
-        
-    def updateToken(self, new_oauth_token, new_oauth_token_secret = None):
-        self.oauth_token = new_oauth_token
-        if new_oauth_token_secret is not None:
-            self.oauth_token_secret = new_oauth_token_secret
-    
+                
     # snippet from python-oauth2 module
     @staticmethod
     def generate_timestamp():
@@ -104,19 +110,18 @@ class YMSession:
         self.consumer_secret = consumer_secret
         self.last_sequence = 0
         self.part_token = None
-
         if not self.initPart(userid, password):
             raise Exception, "Unable to init PART token"
-        self.initOAuth()
 
-            
+        self.initOAuth()
         self.contacts = None    
         
         #ready to logon...
             
-        
-    #convert user+password to PART token
     def initPart(self, userid, password):
+        """convert user+password to PART token. This token is stable, based on userid+password+consumer_key. Note: No support for captcha
+        http://developer.yahoo.com/messenger/guide/ch05s03.html
+        """
         print ">initPart"
         uri = "https://login.yahoo.com/WSLogin/V1/get_auth_token?&login=%s&passwd=%s&oauth_consumer_key=%s" % (userid, password, self.consumer_key)
         try:
@@ -130,8 +135,10 @@ class YMSession:
             self._handleHttpError(e)
         return False    
             
-    #convert PART token to oauth access token
     def initOAuth(self, part_token=None):
+        """Use PART token to get OAuth token; based on consumer_key+consumer_secret+previous oauth token (or PART token if this is the first time)+ previous oauth token secret (or empty if this is the first time) access token+current timestamp+random number. The resulting tokens will be unique for this request only, however the tokens are valid for signing subsequent oauth requests until oauth expire time (1 hour). Afterward, a new oauth tokens must be regenerated.
+        http://developer.yahoo.com/messenger/guide/exchangepartforoauthcredentials.html
+        """
         print ">initOauth"
         if part_token is not None:
             self.part_token = part_token
@@ -171,12 +178,11 @@ class YMSession:
             self._handleHttpError(e)
         return False
     
-    """
-    Call before 60 minutes to keep session alive
-    """
     def keepAlive(self):
+        """Refresh yahoo session, note, this is different to OAuth refresh token.
+        """
         print ">keepalive"
-        uri = "http://%s/v1/keepalive?sid=%s&notifyServerToken=%s" % (self.login_data['server'], self.login_data['sessionId'], 1)
+        uri = "http://%s/v1/session/keepalive?sid=%s&notifyServerToken=%s" % (self.login_data['server'], self.login_data['sessionId'], 1)
         headers = self.oauth.getHeader()
         headers['Content-type'] = CONTENT_TYPE
         req = urllib2.Request(uri, None, headers)
@@ -185,15 +191,22 @@ class YMSession:
             o = urllib2.urlopen(req)
             self.notify_token = o.headers['set-cookie'].split(";")[0].split("=")[1]
             print "Cookie:",o.headers['set-cookie']
-            self.session_expired_time = time.time() + 3600 - 120 - 60  #mark time when session will expire, 120 is default idle time of main loop, 60 is safety guard
+            #mark when session will expire, 1 hour is defined by yahoo api. 120 secs to accommodate main loop's idle time, 30 secs is a safety guard.
+            self.session_expired_time = time.time() + 3600 - 120 - 60  
             return True
         except urllib2.HTTPError, e:
             self._handleHttpError(e)
         return False
     
     def sendKeepAliveIfRequired(self):
+        """YM Client need to track 2 potentially expiring thing: OAuth access token, and Yahoo session. Note: refreshing OAuth access token will require refresing Yahoo Session as well. Curently they are both set 1 hour so refreshing both together is a sure deal. However, for robustness, we won't assume both are expiring at the same time.
+        """
+        if self.oauth.isTokenNeedRefresh():
+            print ">OAuth refresh + Keep alive required"
+            self.oauth.refreshAccessToken()
+            return self.keepAlive()
         if time.time() > self.session_expired_time:
-            print "Keep alive required"
+            print ">Keep alive required"
             return self.keepAlive()
     
     def sendMessage(self, send_to_yahooid, message):
@@ -271,18 +284,21 @@ class YMSession:
             primary_userid = self.login_data['primaryLoginId']
         if sequence is None:
             sequence = self.last_sequence + 1
-
+        print "Waiting notification #%s" % self.last_sequence
         uri = "http://%s/v1/pushchannel/%s?sid=%s&seq=%s&count=%s&format=%s&idle=%s&rand=%s" % (self.login_data['notifyServer'], primary_userid, self.login_data['sessionId'], sequence, count, "json", idle, random.randint(0,99999))
         headers = self.oauth.getHeader()
         headers['Cookie'] = 'IM=%s' % self.notify_token
+#        print "Comet header:", headers
         req = urllib2.Request(uri, None, headers)
         try:
             o = urllib2.urlopen(req)
             buff = o.read()
             if len(buff) == 0:
+                print "<empty>"
                 return None
 
             resp = json.loads(buff)
+#            print resp
             for response in resp['responses']:
                 delegateMethodSig = "on_%s_event" % response.keys()[0]
                 if hasattr(self, delegateMethodSig):
@@ -308,6 +324,8 @@ class YMSession:
                     pass         
             except ValueError:
                 print e, buff
+        else:
+            print "Unknown:", e
 
         
 class YMGoogleerBot(YMSession):
@@ -360,12 +378,11 @@ class YMGoogleerBot(YMSession):
             print "=======* %s: %s" % (m['message']['sender'], m['message']['msg'])
 
     def mainLoop(self):
-       self.shutdown = False
-       while not self.shutdown:
-           print "Long running", self.last_sequence
-           self.sendKeepAliveIfRequired()
-           self.cometNotification()
-       self.logout()
+        self.shutdown = False
+        while not self.shutdown:
+            self.sendKeepAliveIfRequired()
+            self.cometNotification()
+        self.logout()
         
     @staticmethod
     def echo(query):
