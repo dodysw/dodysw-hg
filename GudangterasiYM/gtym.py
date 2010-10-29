@@ -17,12 +17,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 """
 
-import urllib, urllib2, random, time
+import urllib, urllib2, random, time, socket
 import json
 
 # change this to your own api number, get it from https://developer.apps.yahoo.com/dashboard/createKey.html
 CONSUMER_KEY = "dj0yJmk9V0t0MXFVTUNUbjFhJmQ9WVdrOVUwMVRhSE01TlRBbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD05Zg--"
 CONSUMER_SECRET = "1822a3db9b80e117a731ea288998d513244c0249"
+
+#Python socket by default has no timeout, this make sure that long notification wait does not persist long after the supposedly 2 minutes yahoo api wait up, in order to detect tcp disconnect event... 
+timeout = 125
+socket.setdefaulttimeout(timeout)
 
 class SimpleOAuth:
     """Generate correct Authoriation header based on consumer key&secret, oauth_token&secret"""
@@ -341,6 +345,10 @@ class YMSession:
             return resp
         except urllib2.HTTPError, e:
             self._handleHttpError(e)
+        except urllib2.URLError, e:
+            #I assume it's socket time out as expected. 
+            return None
+            
 
     def _handleHttpError(self, e):
         buff = e.read()
