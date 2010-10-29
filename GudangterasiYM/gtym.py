@@ -222,6 +222,37 @@ class YMSession:
             self._handleHttpError(e)
         return False
     
+    def setPresence(self, state=None, msg=""):
+        print ">presence"
+        uri = "http://%s/v1/presence?sid=%s" % (self.login_data['server'], self.login_data['sessionId'])
+        headers = self.oauth.getHeader()
+        headers['Content-type'] = CONTENT_TYPE
+        body = json.dumps({"presenceState":state, "presenceMessage":msg})
+        req = urllib2.Request(uri, body, headers)
+        req.get_method = lambda: 'PUT'
+        try:
+            o = urllib2.urlopen(req)
+            return True
+        except urllib2.HTTPError, e:
+            self._handleHttpError(e)
+        return False
+
+    def getPresence(self):
+        print ">presence"
+        uri = "http://%s/v1/presence?sid=%s" % (self.login_data['server'], self.login_data['sessionId'])
+        headers = self.oauth.getHeader()
+        req = urllib2.Request(uri, None, headers)
+        try:
+            o = urllib2.urlopen(req)
+            buff = o.read()
+            if len(buff) > 0:
+                resp = json.loads(buff)
+                return resp
+        except urllib2.HTTPError, e:
+            self._handleHttpError(e)
+        return False
+
+    
     def fetchContactList(self):
         uri = "http://%s/v1/contacts?sid=%s&fields=%%2Bpresence&fields=%%2Bgroups" % (self.login_data['server'], self.login_data['sessionId'])
         headers = self.oauth.getHeader()
@@ -245,6 +276,8 @@ class YMSession:
         req = urllib2.Request(uri, body, headers)
         if not accepted:
             req.get_method = lambda: 'DELETE'
+        else:
+            req.get_method = lambda: 'POST'
         try:
             o = urllib2.urlopen(req)
             return True
@@ -288,7 +321,6 @@ class YMSession:
         uri = "http://%s/v1/pushchannel/%s?sid=%s&seq=%s&count=%s&format=%s&idle=%s&rand=%s" % (self.login_data['notifyServer'], primary_userid, self.login_data['sessionId'], sequence, count, "json", idle, random.randint(0,99999))
         headers = self.oauth.getHeader()
         headers['Cookie'] = 'IM=%s' % self.notify_token
-#        print "Comet header:", headers
         req = urllib2.Request(uri, None, headers)
         try:
             o = urllib2.urlopen(req)
@@ -298,7 +330,6 @@ class YMSession:
                 return None
 
             resp = json.loads(buff)
-#            print resp
             for response in resp['responses']:
                 delegateMethodSig = "on_%s_event" % response.keys()[0]
                 if hasattr(self, delegateMethodSig):
@@ -342,6 +373,7 @@ class YMGoogleerBot(YMSession):
             return
         print "=======%s: %s" % (obj['sender'], obj['msg'])
         self.sendMessage(obj['sender'], "'%s'\n%s" % (self.autotranslate(obj['msg']), self.google(obj['msg'])))
+        self.setPresence(0, 'Last: "%s"' % obj['msg'])
         
     def on_buddyAuthorize_event(self, obj):
         print "=======%s has asked me as buddy" % (obj['sender'])
