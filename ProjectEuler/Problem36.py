@@ -1,4 +1,4 @@
-def is_plaindromic(s):
+def is_plaindromic_slow(s):
     s_len = len(s)
     if s_len < 2:
         return True
@@ -6,7 +6,7 @@ def is_plaindromic(s):
         if s[i] != s[-1-i]:
             return False
     return True
-        
+
 total_plaindromics = 0
 for i in xrange(1000000):
     if is_plaindromic(str(i)) and is_plaindromic(bin(i)[2:]):
