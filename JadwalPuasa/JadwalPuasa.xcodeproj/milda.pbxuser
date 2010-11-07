@@ -2,16 +2,16 @@
 {
 	1D3623240D0F684500981E51 /* JadwalPuasaAppDelegate.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {743, 364}}";
+			sepNavIntBoundsRect = "{{0, 0}, {743, 325}}";
 			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 491}";
+			sepNavVisRange = "{0, 495}";
 		};
 	};
 	1D3623250D0F684500981E51 /* JadwalPuasaAppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1965, 1183}}";
+			sepNavIntBoundsRect = "{{0, 0}, {810, 1274}}";
 			sepNavSelRange = "{0, 0}";
-			sepNavVisRange = "{0, 708}";
+			sepNavVisRange = "{0, 561}";
 		};
 	};
 	1D6058900D05DD3D006BFB54 /* JadwalPuasa */ = {
@@ -22,16 +22,16 @@
 	};
 	289233A80DB2D0DB0083E9F9 /* MainViewController.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {747, 364}}";
-			sepNavSelRange = "{636, 0}";
-			sepNavVisRange = "{0, 642}";
+			sepNavIntBoundsRect = "{{0, 0}, {747, 325}}";
+			sepNavSelRange = "{640, 0}";
+			sepNavVisRange = "{0, 646}";
 		};
 	};
 	289233A90DB2D0DB0083E9F9 /* MainViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {894, 1391}}";
-			sepNavSelRange = "{2442, 0}";
-			sepNavVisRange = "{689, 805}";
+			sepNavIntBoundsRect = "{{0, 0}, {743, 1417}}";
+			sepNavSelRange = "{79, 0}";
+			sepNavVisRange = "{3, 791}";
 		};
 	};
 	289233AC0DB2D0DB0083E9F9 /* FlipsideViewController.h */ = {
@@ -108,22 +108,22 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 303281837;
-			PBXWorkspaceStateSaveDate = 303281837;
+			PBXPerProjectTemplateStateSaveDate = 310838475;
+			PBXWorkspaceStateSaveDate = 310838475;
 		};
 		perUserProjectItems = {
-			A007501B1200447D00ED0E64 /* PBXTextBookmark */ = A007501B1200447D00ED0E64 /* PBXTextBookmark */;
-			A0075026120047DE00ED0E64 /* PBXTextBookmark */ = A0075026120047DE00ED0E64 /* PBXTextBookmark */;
-			A007504612004F6A00ED0E64 /* PBXTextBookmark */ = A007504612004F6A00ED0E64 /* PBXTextBookmark */;
-			A007504712004F6A00ED0E64 /* PBXTextBookmark */ = A007504712004F6A00ED0E64 /* PBXTextBookmark */;
-			A007504812004F6A00ED0E64 /* PBXTextBookmark */ = A007504812004F6A00ED0E64 /* PBXTextBookmark */;
-			A04DC88612053036003AB64A /* PBXTextBookmark */ = A04DC88612053036003AB64A /* PBXTextBookmark */;
-			A04DC88712053036003AB64A /* PBXTextBookmark */ = A04DC88712053036003AB64A /* PBXTextBookmark */;
-			A04DC88812053036003AB64A /* PBXTextBookmark */ = A04DC88812053036003AB64A /* PBXTextBookmark */;
-			A04DC88912053036003AB64A /* PBXTextBookmark */ = A04DC88912053036003AB64A /* PBXTextBookmark */;
-			A04DC8901205327B003AB64A /* PBXTextBookmark */ = A04DC8901205327B003AB64A /* PBXTextBookmark */;
-			A04DC8A71205D742003AB64A /* PBXTextBookmark */ = A04DC8A71205D742003AB64A /* PBXTextBookmark */;
-			A0AB3DF71213B7A300BCAA7D /* PBXTextBookmark */ = A0AB3DF71213B7A300BCAA7D /* PBXTextBookmark */;
+			A007501B1200447D00ED0E64 = A007501B1200447D00ED0E64 /* PBXTextBookmark */;
+			A0075026120047DE00ED0E64 = A0075026120047DE00ED0E64 /* PBXTextBookmark */;
+			A007504612004F6A00ED0E64 = A007504612004F6A00ED0E64 /* PBXTextBookmark */;
+			A007504712004F6A00ED0E64 = A007504712004F6A00ED0E64 /* PBXTextBookmark */;
+			A007504812004F6A00ED0E64 = A007504812004F6A00ED0E64 /* PBXTextBookmark */;
+			A04DC88612053036003AB64A = A04DC88612053036003AB64A /* PBXTextBookmark */;
+			A04DC88712053036003AB64A = A04DC88712053036003AB64A /* PBXTextBookmark */;
+			A04DC88812053036003AB64A = A04DC88812053036003AB64A /* PBXTextBookmark */;
+			A04DC88912053036003AB64A = A04DC88912053036003AB64A /* PBXTextBookmark */;
+			A04DC8901205327B003AB64A = A04DC8901205327B003AB64A /* PBXTextBookmark */;
+			A04DC8A71205D742003AB64A = A04DC8A71205D742003AB64A /* PBXTextBookmark */;
+			A0AB3DF71213B7A300BCAA7D = A0AB3DF71213B7A300BCAA7D /* PBXTextBookmark */;
 		};
 		sourceControlManager = A0074F1E120020B700ED0E64 /* Source Control */;
 		userBuildSettings = {
@@ -223,7 +223,7 @@
 		fRef = A0074FCB120039B400ED0E64 /* PrayerTimeJs.h */;
 		name = "PrayerTimeJs.h: 17";
 		rLen = 0;
-		rLoc = 368;
+		rLoc = 372;
 		rType = 0;
 		vrLen = 448;
 		vrLoc = 0;
@@ -233,7 +233,7 @@
 		fRef = A0074FCC120039B400ED0E64 /* PrayerTimeJs.m */;
 		name = "PrayerTimeJs.m: 38";
 		rLen = 0;
-		rLoc = 1186;
+		rLoc = 1190;
 		rType = 0;
 		vrLen = 1043;
 		vrLoc = 362;
@@ -297,7 +297,7 @@
 		fRef = A04DC81F120474CB003AB64A /* DayViewController.h */;
 		name = "DayViewController.h: 24";
 		rLen = 0;
-		rLoc = 688;
+		rLoc = 692;
 		rType = 0;
 		vrLen = 700;
 		vrLoc = 0;
@@ -307,7 +307,7 @@
 		fRef = A04DC820120474CB003AB64A /* DayViewController.m */;
 		name = "DayViewController.m: 42";
 		rLen = 0;
-		rLoc = 1390;
+		rLoc = 1394;
 		rType = 0;
 		vrLen = 730;
 		vrLoc = 672;
@@ -317,7 +317,7 @@
 		fRef = 289233A80DB2D0DB0083E9F9 /* MainViewController.h */;
 		name = "MainViewController.h: 21";
 		rLen = 0;
-		rLoc = 636;
+		rLoc = 640;
 		rType = 0;
 		vrLen = 642;
 		vrLoc = 0;
@@ -345,7 +345,7 @@
 		fRef = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */;
 		name = "MainViewController.m: 87";
 		rLen = 0;
-		rLoc = 2442;
+		rLoc = 2446;
 		rType = 0;
 		vrLen = 807;
 		vrLoc = 687;
@@ -355,7 +355,7 @@
 		fRef = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */;
 		name = "MainViewController.m: 87";
 		rLen = 0;
-		rLoc = 2442;
+		rLoc = 2446;
 		rType = 0;
 		vrLen = 805;
 		vrLoc = 689;

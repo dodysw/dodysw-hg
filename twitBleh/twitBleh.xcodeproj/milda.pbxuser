@@ -1,0 +1,80 @@
+// !$*UTF8*$!
+{
+	1D3623250D0F684500981E51 /* twitBlehAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {810, 416}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 428}";
+		};
+	};
+	1D6058900D05DD3D006BFB54 /* twitBleh */ = {
+		activeExec = 0;
+		executables = (
+			A0E5B729128704FD00B3F3BC /* twitBleh */,
+		);
+	};
+	28D7ACF60DDB3853001CB0EB /* twitBlehViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {705, 403}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 460}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = A0E5B729128704FD00B3F3BC /* twitBleh */;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* twitBleh */;
+		codeSenseManager = A0E5B7371287051800B3F3BC /* Code sense */;
+		executables = (
+			A0E5B729128704FD00B3F3BC /* twitBleh */,
+		);
+		perUserDictionary = {
+			PBXPerProjectTemplateStateSaveDate = 310838525;
+			PBXWorkspaceStateSaveDate = 310838525;
+		};
+		sourceControlManager = A0E5B7361287051800B3F3BC /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	A0E5B729128704FD00B3F3BC /* twitBleh */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = twitBleh;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	A0E5B7361287051800B3F3BC /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	A0E5B7371287051800B3F3BC /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+}

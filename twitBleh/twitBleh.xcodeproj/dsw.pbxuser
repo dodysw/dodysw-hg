@@ -1,0 +1,279 @@
+// !$*UTF8*$!
+{
+	195173DB1188514F00091DFE /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 19EAC8251187FBE90026B792 /* photos.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = /Users/dsw/Development/twitBleh/photos.plist;
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	195173FF1188548D00091DFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF60DDB3853001CB0EB /* twitBlehViewController.h */;
+		name = "twitBlehViewController.h: 27";
+		rLen = 39;
+		rLoc = 698;
+		rType = 0;
+		vrLen = 606;
+		vrLoc = 138;
+	};
+	195174021188550300091DFE /* twitBlehViewController.m:16 */ = {
+		isa = PBXFileBreakpoint;
+		actions = (
+		);
+		breakpointStyle = 0;
+		continueAfterActions = 0;
+		countType = 0;
+		delayBeforeContinue = 0;
+		fileReference = 28D7ACF70DDB3853001CB0EB /* twitBlehViewController.m */;
+		functionName = "-doneWritingNote:";
+		hitCount = 0;
+		ignoreCount = 0;
+		lineNumber = 16;
+		location = twitBleh;
+		modificationTime = 294147336.552865;
+		originalNumberOfMultipleMatches = 1;
+		state = 1;
+	};
+	1951741B118859AD00091DFE /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF70DDB3853001CB0EB /* twitBlehViewController.m */;
+		name = "twitBlehViewController.m: 38";
+		rLen = 0;
+		rLoc = 1366;
+		rType = 0;
+		vrLen = 489;
+		vrLoc = 1269;
+	};
+	1968CA271186D12F00088D33 /* twitBleh */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = twitBleh;
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+		variableFormatDictionary = {
+		};
+	};
+	1968CA311186D13500088D33 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	1968CA321186D13500088D33 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	1968CA6E1186D68700088D33 /* PickerData.plist */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {791, 324}}";
+			sepNavSelRange = "{329, 0}";
+			sepNavVisRect = "{{0, 0}, {791, 308}}";
+			sepNavWindowFrame = "{{15, 4}, {1191, 769}}";
+		};
+	};
+	198258821186E3B2003A70E7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623240D0F684500981E51 /* twitBlehAppDelegate.h */;
+		name = "twitBlehAppDelegate.h: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 469;
+		vrLoc = 0;
+	};
+	198258831186E3B2003A70E7 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1D3623250D0F684500981E51 /* twitBlehAppDelegate.m */;
+		name = "twitBlehAppDelegate.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 472;
+		vrLoc = 3;
+	};
+	19E89FE01188F6970062EC88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 28D7ACF70DDB3853001CB0EB /* twitBlehViewController.m */;
+		name = "twitBlehViewController.m: 38";
+		rLen = 0;
+		rLoc = 1366;
+		rType = 0;
+		vrLen = 428;
+		vrLoc = 1269;
+	};
+	19EAC8251187FBE90026B792 /* photos.plist */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {791, 476}}";
+			sepNavSelRange = "{0, 850}";
+			sepNavVisRect = "{{0, 0}, {791, 308}}";
+			sepNavWindowFrame = "{{15, 4}, {1191, 769}}";
+		};
+	};
+	19EAC82C118809140026B792 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 8D1107310486CEB800E47090 /* twitBleh-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/dsw/Development/twitBleh/twitBleh-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	19EAC82D118809140026B792 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 1968CA6E1186D68700088D33 /* PickerData.plist */;
+		name = "PickerData.plist: 11";
+		rLen = 0;
+		rLoc = 329;
+		rType = 0;
+		vrLen = 580;
+		vrLoc = 0;
+	};
+	1D3623240D0F684500981E51 /* twitBlehAppDelegate.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {558, 299}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 469}";
+		};
+	};
+	1D3623250D0F684500981E51 /* twitBlehAppDelegate.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {810, 468}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{3, 472}";
+		};
+	};
+	1D6058900D05DD3D006BFB54 /* twitBleh */ = {
+		activeExec = 0;
+		executables = (
+			1968CA271186D12F00088D33 /* twitBleh */,
+		);
+	};
+	28D7ACF60DDB3853001CB0EB /* twitBlehViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {777, 403}}";
+			sepNavSelRange = "{698, 39}";
+			sepNavVisRange = "{138, 606}";
+		};
+	};
+	28D7ACF70DDB3853001CB0EB /* twitBlehViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1111, 1742}}";
+			sepNavSelRange = "{1366, 0}";
+			sepNavVisRange = "{1269, 428}";
+			sepNavWindowFrame = "{{15, 4}, {1191, 769}}";
+		};
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Release;
+		activeExecutable = 1968CA271186D12F00088D33 /* twitBleh */;
+		activeSDKPreference = iphonesimulator3.1.3;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* twitBleh */;
+		addToTargets = (
+			1D6058900D05DD3D006BFB54 /* twitBleh */,
+		);
+		breakpoints = (
+			195174021188550300091DFE /* twitBlehViewController.m:16 */,
+		);
+		codeSenseManager = 1968CA321186D13500088D33 /* Code sense */;
+		executables = (
+			1968CA271186D12F00088D33 /* twitBleh */,
+		);
+		perUserDictionary = {
+			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA1AED706398EBD00589147" = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXBreakpointsDataSource_BreakpointID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					20,
+					198,
+					20,
+					99,
+					99,
+					29,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXBreakpointsDataSource_ActionID,
+					PBXBreakpointsDataSource_TypeID,
+					PBXBreakpointsDataSource_BreakpointID,
+					PBXBreakpointsDataSource_UseID,
+					PBXBreakpointsDataSource_LocationID,
+					PBXBreakpointsDataSource_ConditionID,
+					PBXBreakpointsDataSource_IgnoreCountID,
+					PBXBreakpointsDataSource_ContinueID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					599,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 294158398;
+			PBXWorkspaceStateSaveDate = 294158398;
+		};
+		perUserProjectItems = {
+			195173DB1188514F00091DFE /* PlistBookmark */ = 195173DB1188514F00091DFE /* PlistBookmark */;
+			195173FF1188548D00091DFE /* PBXTextBookmark */ = 195173FF1188548D00091DFE /* PBXTextBookmark */;
+			1951741B118859AD00091DFE /* PBXTextBookmark */ = 1951741B118859AD00091DFE /* PBXTextBookmark */;
+			198258821186E3B2003A70E7 /* PBXTextBookmark */ = 198258821186E3B2003A70E7 /* PBXTextBookmark */;
+			198258831186E3B2003A70E7 /* PBXTextBookmark */ = 198258831186E3B2003A70E7 /* PBXTextBookmark */;
+			19E89FE01188F6970062EC88 /* PBXTextBookmark */ = 19E89FE01188F6970062EC88 /* PBXTextBookmark */;
+			19EAC82C118809140026B792 /* PlistBookmark */ = 19EAC82C118809140026B792 /* PlistBookmark */;
+			19EAC82D118809140026B792 /* PBXTextBookmark */ = 19EAC82D118809140026B792 /* PBXTextBookmark */;
+		};
+		sourceControlManager = 1968CA311186D13500088D33 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+}

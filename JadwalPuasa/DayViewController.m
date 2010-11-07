@@ -2,7 +2,7 @@
 //  DayViewController.m
 //  JadwalPuasa
 //
-//  Created by Milda Irhamni on 7/31/10.
+//  Created by Dody Suria Wijaya on 7/31/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 

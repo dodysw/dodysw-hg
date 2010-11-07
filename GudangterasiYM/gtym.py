@@ -29,7 +29,7 @@ timeout = 125
 socket.setdefaulttimeout(timeout)
 
 class SimpleOAuth:
-    """Generate correct Authoriation header based on consumer key&secret, oauth_token&secret"""
+    """Generate Authoriation header based on OAth protocol standard. This class only implements partial OAuth, in order to be succint."""
 
     def __init__(self, oauth_server, oauth_consumer_key, oauth_consumer_secret, oauth_token="", oauth_token_secret="", realm=None):
         self.oauth_server = oauth_server
@@ -82,16 +82,12 @@ class SimpleOAuth:
             self.realm,
             self.escape(self.oauth_consumer_key), 
             self.escape(self.generate_nonce()), 
-            self.escape(str(self.generate_timestamp())), 
+            self.escape(str(int(time.time()))), 
             self.escape("%s&%s" % (self.oauth_consumer_secret,self.oauth_token_secret)), 
             self.oauth_token)
         return headers
                 
     # snippet from python-oauth2 module
-    @staticmethod
-    def generate_timestamp():
-        """Get seconds since epoch (UTC)."""
-        return int(time.time())
     @staticmethod
     def generate_nonce(length=8):
         """Generate pseudorandom number."""

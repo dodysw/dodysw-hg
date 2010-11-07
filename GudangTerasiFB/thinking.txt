@@ -1,0 +1,178 @@
+Read:
+general authentication, since this is the first step of almost all client
+http://developers.facebook.com/docs/authentication/
+
+specific method for desktop
+http://developers.facebook.com/docs/authentication/desktop
+
+- okay so facebook need to ask account holder whether to allows the apps to access their info (authorization step). this requires browser.
+- i need to get application id from http://developers.facebook.com/setup/. OK made up a stupid name and fake url:
+    URL Aplikasi:	http://gudangterasi.appspot.com/
+    ID Aplikasi:	171458256203117    ->client id
+    Rahasia Aplikasi:	70da93e2f219db243ef05b3be71d05b3  ->client secret
+    A sample form is also given:
+            <!DOCTYPE html>
+        <html xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:fb="http://www.facebook.com/2008/fbml">
+          <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <title>Gudang Terasi</title>
+          </head>
+          <body>
+            <h1>Gudang Terasi</h1>
+            <p><fb:login-button autologoutlink="true"></fb:login-button></p>
+            <p><fb:like></fb:like></p>
+        
+            <div id="fb-root"></div>
+            <script>
+              window.fbAsyncInit = function() {
+                FB.init({appId: '171458256203117', status: true, cookie: true,
+                         xfbml: true});
+              };
+              (function() {
+                var e = document.createElement('script');
+                e.type = 'text/javascript';
+                e.src = document.location.protocol +
+                  '//connect.facebook.net/id_ID/all.js';
+                e.async = true;
+                document.getElementById('fb-root').appendChild(e);
+              }());
+            </script>
+          </body>
+        </html>
+- mental note: I created the above using gudangterasi@yahoo.com user
+- facebook mentioned that there's already a python library in http://github.com/facebook/python-sdk/ to help accessing facebook API. Might be useful lter, but right now I want to make a basic from-scratch apps in order to know alot more on what's really going on behind the screen.
+- also some kind of "Graphic API" in http://developers.facebook.com/docs/api, that supposely provide simple made-up RESTful that can be accessed simply by providing username or the id plus access token, and will return JSON. They are:
+    * Users: https://graph.facebook.com/btaylor (Bret Taylor)
+    * Pages: https://graph.facebook.com/cocacola (Coca-Cola page)
+    * Events: https://graph.facebook.com/251906384206 (Facebook Developer Garage Austin)
+    * Groups: https://graph.facebook.com/2204501798 (Emacs users group)
+    * Applications: https://graph.facebook.com/2439131959 (the Graffiti app)
+    * Status messages: https://graph.facebook.com/367501354973 (A status message from Bret)
+    * Photos: https://graph.facebook.com/98423808305 (A photo from the Coca-Cola page)
+    * Photo albums: https://graph.facebook.com/99394368305 (Coca-Cola's wall photos)
+    * Profile pictures: http://graph.facebook.com/100001821672003/picture (your profile picture)
+    * Videos: https://graph.facebook.com/614004947048 (A Facebook tech talk on Tornado)
+    * Notes: https://graph.facebook.com/122788341354 (Note announcing Facebook for iPhone 3.0)
+    * Check-ins: https://graph.facebook.com/414866888308 (Check-in at a pizzeria)
+    also additional RESTful api for many connected information. These are all info connected to a person and pages:
+    * Friends: https://graph.facebook.com/me/friends
+    * News feed: https://graph.facebook.com/me/home
+    * Profile feed (Wall): https://graph.facebook.com/me/feed
+    * Likes: https://graph.facebook.com/me/likes
+    * Movies: https://graph.facebook.com/me/movies
+    * Books: https://graph.facebook.com/me/books
+    * Notes: https://graph.facebook.com/me/notes
+    * Photo Tags: https://graph.facebook.com/me/photos
+    * Photo Albums: https://graph.facebook.com/me/albums
+    * Video Tags: https://graph.facebook.com/me/videos
+    * Video Uploads: https://graph.facebook.com/me/videos/uploaded
+    * Events: https://graph.facebook.com/me/events
+    * Groups: https://graph.facebook.com/me/groups
+    * Check-ins: https://graph.facebook.com/me/checkins
+    While these are info connected to event:
+    https://graph.facebook.com/331218348435/attending.
+- A More complete graphic API is placed at http://developers.facebook.com/docs/reference/api/
+- OK, enough, I need to as soon as possible find out how to get that access token that's mandatory on each of the Graphic API REST call.
+- Following the "what next" link to http://developers.facebook.com/docs/guides/web
+- That page was more oriented toward web apps, I'll just skim through until maybe something more about desktop apps.
+- There's one for mobile apps, but it's simply web apps that's formatted for small screen that is mobile device.
+    http://developers.facebook.com/docs/guides/mobile/
+- Let's browse the documentation from start
+- OK got back to http://developers.facebook.com/docs/authentication/
+- Found a way to perform OAuth authentication "as application", used to perform administrative task. The example uses Curl, looking up what's "-F" does…
+    curl -F grant_type=client_credentials \
+     -F client_id=your_app_id \
+     -F client_secret=your_app_secret \
+     https://graph.facebook.com/oauth/access_token
+- "-F" is a multipart FORM post parameter. Let's try it…
+    curl -F grant_type=client_credentials \
+     -F client_id=171458256203117 \
+     -F client_secret=70da93e2f219db243ef05b3be71d05b3 \
+     https://graph.facebook.com/oauth/access_token
+- It returned:
+    access_token=171458256203117|tpsC8TOaOOvSluZGe6QbVr-p8Kw
+- Curious, i'm checking out whether subsequent calls will change the token…rerunning curl…still the same
+- Now let's read the rest of the docs..
+- OK there's a mention about exchanging "Session key" to access_token, here's an example:
+    curl -F client_id=your_app_id \
+     -F client_secret=your_app_secret \
+     -F sessions=session_key1,session_key2 \
+     https://graph.facebook.com/oauth/exchange_sessions
+- The result is supposedly a JSON like the following…but I think I will take that as granted, since I don't know or even have session key right now.
+    [
+      {
+        "access_token": "...",
+        "expires": 1271649600,
+      },
+      ...
+    ]
+- There's an interesting mention from facebook that in order to provide app access to user's "private data" it needs to be authorizd by the user itself. Facebook provides a webpage where this can be done. This is the format of the url:
+    https://graph.facebook.com/oauth/authorize?
+    client_id=...&
+    redirect_uri=http://www.example.com/callback&
+    scope=user_photos,user_videos,publish_stream
+- I'm still looking a way whether I can do this programmaticaly, assuming I know the user/pass of the particular user, however, curiosity abound! let's try it…
+    https://graph.facebook.com/oauth/authorize?client_id=171458256203117&redirect_uri=http://www.example.com/callback&scope=user_photos,user_videos,publish_stream
+- Huh, "OAuthException", relating to invalid redirect_url, let's try changing it to the "official" url I registered with the apps:
+    https://graph.facebook.com/oauth/authorize?client_id=171458256203117&redirect_uri=http://gudangterasi.appspot.com
+- It worked :D But stil, I'm looking a way to programmatically perform authorization on behalf of user, without having to open the web page.
+- Damn, haven't found a way. Let's skip that for a moment and go on with the document. Well looking at http://developers.facebook.com/docs/authentication/permissions I found a list of extended permission "scope". Since at this stage I want the app to post something to the user's feed, this information is of relevnt to me. The permissions are divided into groups:
+    Publishing permission
+        publish_stream <-- this is it
+        create_event
+        rsvp_event
+        sms
+        offline_access <-- this is also interesting. Looks like access token expires quickly, this can be used to make access token live a longer time.
+    Data permission: consists of permission to access user's data, and user's friend's data
+        …there're too many here, i'll put ones I'm interested in..
+        user_status  <-- might be handy to read the user's status
+        read_stream  <-- useful to check whether things that the apps recently published has appears on the user's stream
+        xmpp_login <--- ah, interesting to know tht facebook provides api to its chat, maybe I later i'll look on to this
+    Page permission
+        manage_pages
+- OK, I think for time being, I will assume that facebook forces all apps to get authorization via its formal page. Now let's find out a way for apps to know whether or not it's already authorized to publish to user's stream
+- <before that> read something that clarify the flow. So after user has authorized, user will redirected to the redirect_uri I provided, with addition of url parameter code=<verification string>. This verification string then can be exchanged to access_token via this API:
+    https://graph.facebook.com/oauth/access_token?
+    client_id=...&
+    redirect_uri=http://www.example.com/oauth_redirect&
+    client_secret=...&
+    code=...
+- Well this is bad news, how am i going to retrieve the code if my app is a desktop apps? Time to go for a bit digging and googling…
+- http://developers.facebook.com/blog/post/289 mentioned about "Facebook Connect" that allows apps authorization without redirecting to browser…let's have a look the link inside that blog:
+    http://developers.facebook.com/search?q=Authorization_and_Authentication_for_Desktop_Applications
+- Ah..
+    http://developers.facebook.com/docs/authentication/desktop
+- It said to redirect to http://www.facebook.com/connect/login_success.html, and for apps to capture the event. I'm not really sure how it really goes, but let's simulate on actual browser…
+        https://graph.facebook.com/oauth/authorize?client_id=171458256203117&redirect_uri=http://www.facebook.com/connect/login_success.html
+    okay, it redireced to 
+        http://www.facebook.com/connect/login_success.html?code=2.yR5d0nja4nn2FyBs18hJtg__.3600.1288389600-100001821672003|1FG1RJW2Ah09ED6gEhus4LqNj9Y
+    so I have to capture the "code" parameter.
+- What if the app run that url again…it immediately redirect to that page, as expected :D
+- Wait, the docs said that the redirect contains access token, that's not what I experienced, let's exactly add type and display paraeters to the requesting url:
+    https://graph.facebook.com/oauth/authorize?client_id=171458256203117&redirect_uri=http://www.facebook.com/connect/login_success.html&type=user_agent&display=popup
+    it redirected to:
+    http://www.facebook.com/connect/login_success.html#access_token=171458256203117|2.yR5d0nja4nn2FyBs18hJtg__.3600.1288389600-100001821672003|pbnnz49GHQeuuNe6TgmFummknmw&expires_in=3978
+- OK, so the type=user_agent is responsible in the difference. This is useful, that means I can immediately follow up with the meat of the apps (publishing feed hehe)
+- Looks like I'm stucked. Can't find a way to perform authorization without web browser. Time to hit the python library sample…
+    http://github.com/facebook/python-sdk/blob/master/examples/oauth/facebookoauth.py
+- Seemed that it creates a simple http server, in order to capture the redirect_uri's code/access_token.  So facebook must allow redirection to localhost? let's try it…
+    https://graph.facebook.com/oauth/authorize?client_id=171458256203117&redirect_uri=http://localhost/&type=user_agent&display=popup
+    Hmmmm..not allowed, let's change it from the app's property in facebook
+- WTF, how do I get back to my app profile…ah there it is http://www.facebook.com/developers/
+- Changed, let's try it again…
+    https://graph.facebook.com/oauth/authorize?client_id=171458256203117&redirect_uri=http://localhost/&type=user_agent&display=popup
+    It worked, as expected :D
+- WOOW, back from 3 days OFF. Now back on track. Let's make a quick httpd server to capture the user's access_token, a quick google reveals that Python has built in class for a simple httpd server called SimpleHTTPServer, let's read the documentation a bit.
+    http://docs.python.org/library/simplehttpserver.html
+- So SimpleHTTPServer is basically a subclass of BaseHTTPServer, in which has handler that handles GET and HEAD request and maps them to retrieve a predetermined html files on the same directory. We want to have a simple server that detects a GET and capture the url so I'm going to create my own handler that do just that and subclass BaseHTTPServer….
+- Turned out to be just a few lines of python code :D Now, how do I make the httpd server quit when it's done its duty…This page really helps a lot:
+    http://docs.python.org/library/basehttpserver.html
+- OK, the simple web server is done, now a simple test…darn, the facebook's redirect_url check is pretty strict. Let's try removing the application webpage setting all together and see whether facebook will perform validation…Nope. Now any ports is causes redirect_url failure error. Hemmm…playing a bit with the settings…
+- Seems impossible, oh well, I've set it to localhost:7777, now final checking..
+- Aw damn, everything after "#" in url is not sent to server-side, of course! So it's one step backward, based on previous experience, the type=user_agent should be removed, then we will receive a request token that should be exchanged with access token. Let's do it…
+- Darn, got "Error validating verification code."…what's going on in here…let's read the access_token docs in more detail…
+- Hemm, there's a clause "Pass the exact same redirect_uri as in the previous step"..let's do that…success!!
+- Now a bit more clean up, and a method to post a wall post, then i'm good to go…
+- Yay, works
+- Now let's do a bit refactoring so that the python api can perform generic graph request, just like the formal python-facebook library…
