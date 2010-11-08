@@ -29,7 +29,7 @@ while 1:
         #from left
         if is_trunctable_prime:
             p = list(str(i))
-            while len(p) > 0:
+            while len(p) > 1:
                 p.pop(0)
                 if not is_prime(int(''.join(p))):
                     is_trunctable_prime = False
