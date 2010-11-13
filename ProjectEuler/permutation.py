@@ -83,4 +83,5 @@ def permutationSize2(c, size=1, prev=""):
             q -= 1
 
 if __name__ == '__main__':
-     permutationSize2([0,1],5)
+     for n in permutationNorepeatSize(list("12345"),3):
+        print ''.join(n)
