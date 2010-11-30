@@ -42,7 +42,7 @@ def nextelements(lists, m, prev_tail):
         if next:
             return [my_head*100+tail] + next
 
-def permutationNorepeat(c, prev=[]):
+def permutationNorepeatList(c, prev=[]):
     """Generate len(<c>) length permutation of a list of characters with no repetition.
     The number of result is always factorial(len(<c>))
     E.g.: abc -> abc, acb, bac, bca, cba, cab    
