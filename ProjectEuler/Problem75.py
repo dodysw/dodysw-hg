@@ -86,7 +86,7 @@ def try4():
     # or it's easier to use wolfram: http://www.wolframalpha.com/input/?i=m*m+-+n*n+%2B+2*m*n+%2B+m*m+%2B+n*n+%3C%3D+1500000%2C+m+%3E+0%2C+n+%3E+0%2C+m+%3E+n
     limit_m2 =int(500*3**0.5)
     limit_m1 = int(250*6**0.5)
-    Ls = [dict()] * (1500000+1)
+    Ls = [set()] * (1500000+1)
     #"given an arbitrary pair of positive integers m and n with m > n"
     for m in xrange(2,limit_m2+1):
         limit_n = ((750000 - m*m)/m) + 1 if m > limit_m1 else m
