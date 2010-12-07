@@ -21,6 +21,25 @@ def arbol(n1, d1, n2, d2):
     arbol(an, ad, n2, d2)
     arbolcount += 1
     
+#From http://en.wikipedia.org/wiki/Farey_sequence
+#Modified to fit into problem
+def farey(n):
+    """Python function to print the nth Farey sequence, either ascending or descending."""
+    a, b, c, d = 0,1,1,n     # (*)
+    count = 0
+    begin_counting = False
+    while (c < n):
+        k = int((n + b)/d)
+        a, b, c, d = c, d, k*c - a, k*d - b
+        if a == 1 and b == 2:
+            break
+        if a == 1 and b == 3:
+            begin_counting = True
+        if begin_counting:
+            count += 1
+    return count - 1
+
+    
 def try1():
     limit = 12000
     count = 0
@@ -41,7 +60,11 @@ def try2():
     print "ans:", arbolcount
     # arbol(0,1,1,0)
 
-try2()
+def try3():
+    limit = 12000
+    print "ans:", farey(limit)
+
+try3()
 
 # 7295372
 print time.time() - st

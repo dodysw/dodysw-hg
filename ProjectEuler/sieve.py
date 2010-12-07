@@ -40,6 +40,7 @@ def sieve_best(limit):
 				is_prime[j] = False
 	primes = [i for i in xrange(2,limit) if is_prime[i]]
 
+
 import timeit
 #print timeit.timeit("sieve(1000000)","from __main__ import sieve", number=5)
 #print timeit.timeit("sieve2(1000000)","from __main__ import sieve_dody", number=5)
