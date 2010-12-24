@@ -33,12 +33,12 @@ def sieve2(n):
 def sieve_best(limit):
 	# this is better if we need to generate prime AND check if number is prime
 	global primes, is_prime
-	is_prime = [True] * limit
-	for i in xrange(2,int(limit**0.5)):
-		if is_prime[i]:
-			for j in xrange(2*i, limit, i):
-				is_prime[j] = False
-	primes = [i for i in xrange(2,limit) if is_prime[i]]
+   is_prime = [True] * limit
+   for i in xrange(2,int(limit**0.5)):
+	   if is_prime[i]:
+		   for j in xrange(2*i, limit, i):
+			   is_prime[j] = False
+   primes = [i for i in xrange(2,limit) if is_prime[i]]
 
 
 import timeit
