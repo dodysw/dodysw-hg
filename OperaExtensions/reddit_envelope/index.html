@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+    var has_unread_message_icon = "mail.png";
+    var no_unread_message_icon = "mailgray.png";
+    var badge_count = 1;
+    var t = null;
+    var theButton;
+    var is_logged_in = false;
+    
+    function handleData(response_text) {
+        var msg = JSON.parse(response_text);
+        //window.opera.postError('Has mail: ' + msg.data.has_mail);
+        if (msg.data.has_mail == null) {
+            //either user has not logged in, or user is not logged in to given username
+            theButton.badge.textContent = "Login";
+        }
+        else {
+            theButton.badge.textContent = msg.data.link_karma
+            theButton.icon = msg.data.has_mail? has_unread_message_icon: no_unread_message_icon;
+        }
+    }
+    
+    function updateStatus() {
+        if (is_logged_in) {
+            var resp = request("GET", 'http://www.reddit.com/user/' + widget.preferences["username"] + '/about.json');
+            handleData(resp);
+        }
+    }
+    
+    function request(method, url, params) {
+        var old_badge = theButton.badge.textContent;
+        theButton.badge.textContent = "...";
+        // window.opera.postError('Request ' + method + ' to ' + url + ' params ' +params);
+        var xhr = new XMLHttpRequest();
+        xhr.open(method,url,false);
+        if (method == "POST") {
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.setRequestHeader("Content-length", params.length);
+        }
+        xhr.send(params);
+        // window.opera.postError('Response: ' + xhr.responseText);
+        theButton.badge.textContent = old_badge;
+        return xhr.responseText;
+    }
+    
+    function loginReddit() {
+        is_logged_in = false;
+        if (widget.preferences["username"] && widget.preferences["passwd"]) {
+            var resp = request("POST", "http://www.reddit.com/api/login", "user="+ widget.preferences["username"] + "&passwd=" + widget.preferences["passwd"]);
+            is_logged_in = (resp.indexOf("WRONG_PASSWORD") == -1 && resp.indexOf("invalid password") == -1);
+        }
+    }
+    
+    function startTimer() {
+        clearInterval(t);
+        t = setInterval("updateStatus()", parseInt(widget.preferences["update_freq"])*1000);
+    }
+    
+    function stopTimer() {
+        clearInterval(t);
+    }
+    
+    function updateStatusAndResetTimer() {
+        loginReddit();
+        if (is_logged_in) {
+            updateStatus();
+            startTimer();
+        }
+        else {
+            stopTimer();
+            theButton.badge.textContent = "Login";
+        }
+    }    
+       window.addEventListener("load", function(){
+        
+        var ToolbarUIItemProperties = {
+          title: "Reddit Envelope",
+          icon: no_unread_message_icon,
+          popup: {
+            href: "popup.html",
+            width: 200,
+            height: 113,
+          },
+          badge: {
+                    display: "block",
+                    textContent: "Hi :D",
+                    color: "rgba(64,64,64,1)",
+                    backgroundColor: "rgba(206, 227, 248, 1)"
+          },        
+        }
+        theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
+        opera.contexts.toolbar.addItem(theButton);
+                
+        if (!widget.preferences["update_freq"]) {
+            widget.preferences["update_freq"] = "60";
+        }
+                
+        opera.extension.onmessage = function(event){
+           if (event.data == "LOGIN") {
+               updateStatusAndResetTimer();
+           }
+        }
+
+        updateStatusAndResetTimer();
+
+      }, false);
+      
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

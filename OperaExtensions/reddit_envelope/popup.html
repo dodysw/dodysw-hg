@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Configuration</title>
+  	<style>
+  		p {font: 12px verdana, arial, sans-serif;}
+  	</style>
+  	<script>
+  	    function save() {
+  	        var el = document.forms[0].elements;
+  	        widget.preferences["username"] = el["username"].value;
+  	        widget.preferences["passwd"] = el["passwd"].value;
+  	        
+  	        //tell background process to login again
+  	        opera.extension.postMessage("LOGIN");
+  	        
+  	        window.close();
+  	    }
+  	    function fill() {
+  	        var el = document.forms[0].elements;
+            el["username"].value = widget.preferences["username"];
+            el["passwd"].value = widget.preferences["passwd"];
+  	    }
+  	    
+  	</script>
+  </head>
+  <body onload="fill()">
+    <form onSubmit="save()">
+  	<p>Reddit Username<input type="text" name="username"><br/>
+  	Password<input type="password" name="passwd"><br/>
+  	<input type="submit" value="Save"/>
+  	</p>
+  	</form>
+  </body>
+</html>
