@@ -4,28 +4,22 @@
     <script>
     var has_unread_message_icon = "mail.png";
     var no_unread_message_icon = "mailgray.png";
-    var badge_count = 1;
     var t = null;
     var theButton;
     var is_logged_in = false;
     
-    function handleData(response_text) {
-        var msg = JSON.parse(response_text);
-        //window.opera.postError('Has mail: ' + msg.data.has_mail);
-        if (msg.data.has_mail == null) {
-            //either user has not logged in, or user is not logged in to given username
-            theButton.badge.textContent = "Login";
-        }
-        else {
-            theButton.badge.textContent = msg.data.link_karma
-            theButton.icon = msg.data.has_mail? has_unread_message_icon: no_unread_message_icon;
-        }
-    }
-    
     function updateStatus() {
         if (is_logged_in) {
-            var resp = request("GET", 'http://www.reddit.com/user/' + widget.preferences["username"] + '/about.json');
-            handleData(resp);
+            var response_text = request("GET", 'http://www.reddit.com/user/' + widget.preferences["username"] + '/about.json');
+            var msg = JSON.parse(response_text);
+            if (msg.data.has_mail == null) {
+                //either user has not logged in, or user is not logged in to given username
+                theButton.badge.textContent = "Login";
+            }
+            else {
+                theButton.badge.textContent = msg.data.link_karma
+                theButton.icon = msg.data.has_mail? has_unread_message_icon: no_unread_message_icon;
+            }
         }
     }
     
@@ -40,7 +34,6 @@
             xhr.setRequestHeader("Content-length", params.length);
         }
         xhr.send(params);
-        // window.opera.postError('Response: ' + xhr.responseText);
         theButton.badge.textContent = old_badge;
         return xhr.responseText;
     }
@@ -53,26 +46,19 @@
         }
     }
     
-    function startTimer() {
+    var t = null;
+    function LoginAndUpdateStatus() {
         clearInterval(t);
-        t = setInterval("updateStatus()", parseInt(widget.preferences["update_freq"])*1000);
-    }
-    
-    function stopTimer() {
-        clearInterval(t);
-    }
-    
-    function updateStatusAndResetTimer() {
         loginReddit();
         if (is_logged_in) {
             updateStatus();
-            startTimer();
+            t = setInterval("updateStatus()", parseInt(widget.preferences["update_freq"]));
         }
         else {
-            stopTimer();
             theButton.badge.textContent = "Login";
         }
     }    
+       
        window.addEventListener("load", function(){
         
         var ToolbarUIItemProperties = {
@@ -93,17 +79,13 @@
         theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
         opera.contexts.toolbar.addItem(theButton);
                 
-        if (!widget.preferences["update_freq"]) {
-            widget.preferences["update_freq"] = "60";
-        }
-                
         opera.extension.onmessage = function(event){
            if (event.data == "LOGIN") {
-               updateStatusAndResetTimer();
+               LoginAndUpdateStatus();
            }
         }
 
-        updateStatusAndResetTimer();
+        LoginAndUpdateStatus();
 
       }, false);
       

@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!---
-http://dev.opera.com/articles/view/opera-extensions-buttons-badges-and-popups/
--->
 <widget xmlns="http://www.w3.org/ns/widgets">
 	<name>Reddit Envelope</name>
 	<description>Shows your reddit's envelope icon</description>
