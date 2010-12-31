@@ -1,19 +1,22 @@
-<!doctype html>
-<html lang="en"><head><script>
+<html><script>
+console.log("BG!");
 var cached_title_url = new Array();
 var pt1 = /^\s\s*/;
 var pt2 = /\s\s*$/;
 
-opera.extension.onmessage = function(event) {
-    if (event.data == "INCSKIP") {
+chrome.extension.onRequest.addListener(
+function(request, sender, senderResponse) {
+    console.log("Receive:" + request.cmd);
+    if (request.cmd == "INCSKIP") {
         increment_skiped_count();
+        senderResponse({});
     }
-    else if (event.data.substr(0,2) == "##") {
-        var tempsplit = event.data.split("##",3);
-        var title = tempsplit[1];
-        var href = tempsplit[2];
+    else if (request.cmd == "SOLVE") {
+        var title = request.title;
+        var href = request.href;
         if (cached_title_url[title] == undefined) {
             //query webpage, iterate it's title
+            console.log("Req:" + href);
             var xhr = new XMLHttpRequest();
             xhr.open("GET", href, false);
             xhr.send();
@@ -22,6 +25,7 @@ opera.extension.onmessage = function(event) {
             var tempDiv = document.createElement('div');
             tempDiv.innerHTML = xhr.responseText;
             anchors = tempDiv.getElementsByTagName("a");
+            
             var found = false;
             for (var i = 0; i < anchors.length; i++) {
                 var el = anchors[i];
@@ -40,22 +44,28 @@ opera.extension.onmessage = function(event) {
                 }
                 href = el.href;
                 increment_skiped_count();
-                break;
+                found = true;
             }
         }
         else {
             href = cached_title_url[title];
+            console.log("From cache:" + href);
         }
-        event.source.postMessage("REDIRECT##" + href);
+        
+        senderResponse({cmd:"REDIRECT", href:href});
     }
-}
+    else if (request.cmd == "INIT") {
+        if (localStorage["skipped_count"] == undefined) {
+            localStorage["skipped_count"] = 0;
+        }
+        console.log("Count: " + localStorage["skipped_count"]);
+        var skipped_count = parseInt(localStorage["skipped_count"]) + 1;
+        senderResponse({cmd:"COUNT", skipped_count:skipped_count});
+    }
+});
 
 function increment_skiped_count() {
-    widget.preferences["skipped_count"] = parseInt(widget.preferences["skipped_count"]) + 1;
+    localStorage["skipped_count"] = parseInt(localStorage["skipped_count"]) + 1;
 }
 
-opera.extension.onconnect = function(){
-    var skipped_count = parseInt(widget.preferences["skipped_count"]) + 1;
-    event.source.postMessage("COUNT##" + skipped_count);
-};
-</script></head><body></body></html>
+</script></html>
