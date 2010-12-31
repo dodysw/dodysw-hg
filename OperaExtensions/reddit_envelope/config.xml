@@ -2,7 +2,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets">
 	<name>Reddit Envelope</name>
 	<description>Shows your reddit's envelope icon</description>
-  	<author href="http://code.google.com/p/dodysw-hg/" email="dodysw@gmail.com">Dody Suria Wijaya</author>
+  	<author href="http://code.google.com/p/dodysw-hg/wiki/RedditEnvelopeExtension" email="dodysw@gmail.com">Dody Suria Wijaya</author>
   	<icon src="logo.png"/>
   	<preference name="username" value=""/>
   	<preference name="passwd" value=""/>
