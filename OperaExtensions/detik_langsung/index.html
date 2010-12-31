@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head><script>
+function init_extension() {
+
+}
+
+window.addEventListener("load", init_extension, false);
+
+opera.extension.onmessage = function(event) {
+    if (event.data == "INCSKIP") {
+        increment_skiped_count();
+    }
+    else if (event.data.substr(0,2) == "##") {
+        var tempsplit = event.data.split("##",3);
+        var title = tempsplit[1];
+        var href = tempsplit[2];
+        
+        //query webpage, iterate it's title
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", href, false);
+        xhr.send();
+        
+        //use temporary div trick to parse DOM
+        var tempDiv = document.createElement('div');
+        tempDiv.innerHTML = xhr.responseText;
+        anchors = tempDiv.getElementsByTagName("a");
+        
+        for (var i = 0; i < anchors.length; i++) {
+            var el = anchors[i];
+            if (el.innerText.indexOf(title) ==  -1) continue;
+            if (el.protocol == "widget:") {
+                //fix relative url, use anchor object to help me parse url
+                var a = document.createElement("a");
+                a.href = href;
+                el.protocol = a.protocol;
+                el.hostname = a.hostname;
+                el.port = a.port;
+            }
+            href = el.href;
+            increment_skiped_count();
+            break;
+        }
+        
+        event.source.postMessage("REDIRECT##" + href);
+    }
+}
+
+function increment_skiped_count() {
+    widget.preferences["skipped_count"] = parseInt(widget.preferences["skipped_count"]) + 1;
+}
+
+opera.extension.onconnect = function(){
+    var skipped_count = parseInt(widget.preferences["skipped_count"]) + 1;
+    event.source.postMessage("COUNT##" + skipped_count);
+};
+</script></head><body></body></html>

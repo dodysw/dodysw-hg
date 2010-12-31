@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets">
+	<name>Detik Langsung</name>
+	<description>Klik berita kanal detik.com (detikFinance, detikHot, Sepakbola, dst) langsung ke isi berita</description>
+  	<author href="http://code.google.com/p/dodysw-hg/" email="dodysw@gmail.com">Dody Suria Wijaya</author>
+  	<icon src="logo.png"/>
+  	<preference name="skipped_count" value="0"/>
+  	<access origin="http://detik.com" subdomains="true"/>
+  	<access origin="http://detikinet.com" subdomains="true"/>
+    <access origin="http://detikfinance.com" subdomains="true"/>
+    <access origin="http://detiksport.com" subdomains="true"/>
+    <access origin="http://detikhealth.com" subdomains="true"/>
+    <access origin="http://detikfood.com" subdomains="true"/>
+    <access origin="http://detikhot.com" subdomains="true"/>
+    <access origin="http://detiknews.com" subdomains="true"/>
+    <access origin="http://wolipop.com" subdomains="true"/>
+</widget>
