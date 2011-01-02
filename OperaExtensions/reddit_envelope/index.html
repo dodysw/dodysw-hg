@@ -1,96 +1,143 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <script>
-    var has_unread_message_icon = "mail.png";
-    var no_unread_message_icon = "mailgray.png";
-    var t = null;
-    var theButton;
-    var is_logged_in = false;
-    
-    function updateStatus() {
-        if (is_logged_in) {
-            var response_text = request("GET", 'http://www.reddit.com/user/' + widget.preferences["username"] + '/about.json');
-            var msg = JSON.parse(response_text);
-            if (msg.data.has_mail == null) {
-                //either user has not logged in, or user is not logged in to given username
-                theButton.badge.textContent = "Login";
-            }
-            else {
-                theButton.badge.textContent = msg.data.link_karma
-                theButton.icon = msg.data.has_mail? has_unread_message_icon: no_unread_message_icon;
-            }
-        }
-    }
-    
-    function request(method, url, params) {
-        var old_badge = theButton.badge.textContent;
-        theButton.badge.textContent = "...";
-        // window.opera.postError('Request ' + method + ' to ' + url + ' params ' +params);
-        var xhr = new XMLHttpRequest();
-        xhr.open(method,url,false);
-        if (method == "POST") {
-            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xhr.setRequestHeader("Content-length", params.length);
-        }
-        xhr.send(params);
-        theButton.badge.textContent = old_badge;
-        return xhr.responseText;
-    }
-    
-    function loginReddit() {
-        is_logged_in = false;
-        if (widget.preferences["username"] && widget.preferences["passwd"]) {
-            var resp = request("POST", "http://www.reddit.com/api/login", "user="+ widget.preferences["username"] + "&passwd=" + widget.preferences["passwd"]);
-            is_logged_in = (resp.indexOf("WRONG_PASSWORD") == -1 && resp.indexOf("invalid password") == -1);
-        }
-    }
-    
-    var t = null;
-    function LoginAndUpdateStatus() {
-        clearInterval(t);
-        loginReddit();
-        if (is_logged_in) {
-            updateStatus();
-            t = setInterval("updateStatus()", parseInt(widget.preferences["update_freq"]));
+<!doctype html><html lang="en"><head><script>
+
+var has_unread_message_icon = "mail.png";
+var no_unread_message_icon = "mailgray.png";
+var t = null;
+var theButton;
+var theButtonPopup;
+var theCurrentButton;
+var is_logged_in = false;
+
+Object.extend = function(destination, source) {
+    for (var property in source)
+        destination[property] = source[property];
+    return destination;
+};
+
+function updateStatus() {
+    if (is_logged_in) {
+        var response_text = request("GET", 'http://www.reddit.com/user/' + widget.preferences["username"] + '/about.json');
+        var msg = JSON.parse(response_text);
+        if (msg.data.has_mail == null) {
+            //login problem. Stop timer.
+            setToLoginMode();
         }
         else {
-            theButton.badge.textContent = "Login";
+            theCurrentButton.badge.textContent = msg.data.link_karma
+            theCurrentButton.icon = msg.data.has_mail? has_unread_message_icon: no_unread_message_icon;
+            theCurrentButton.title = "Reddit Envelope: " + widget.preferences["username"];
         }
-    }    
-       
-       window.addEventListener("load", function(){
-        
-        var ToolbarUIItemProperties = {
-          title: "Reddit Envelope",
-          icon: no_unread_message_icon,
-          popup: {
-            href: "popup.html",
-            width: 200,
-            height: 113,
-          },
-          badge: {
-                    display: "block",
-                    textContent: "Hi :D",
-                    color: "rgba(64,64,64,1)",
-                    backgroundColor: "rgba(206, 227, 248, 1)"
-          },        
-        }
-        theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
-        opera.contexts.toolbar.addItem(theButton);
-                
-        opera.extension.onmessage = function(event){
-           if (event.data == "LOGIN") {
-               LoginAndUpdateStatus();
-           }
-        }
+    }
+}
 
-        LoginAndUpdateStatus();
+function request(method, url, params) {
+    var old_badge = theCurrentButton.badge.textContent;
+    theCurrentButton.badge.textContent = "...";
+    opera.postError('Request ' + method + ' to ' + url + ' params ' +params);
+    var xhr = new XMLHttpRequest();
+    xhr.open(method,url,false);
+    if (method == "POST") {
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("Content-length", params.length);
+    }
+    xhr.send(params);
+    theCurrentButton.badge.textContent = old_badge;
+//     opera.postError("Cookie:" + xhr.getAllResponseHeaders());
+    return xhr.responseText;
+}
 
-      }, false);
+function loginReddit() {
+    is_logged_in = false;
+    if (widget.preferences["username"] && widget.preferences["passwd"]) {
+        var resp = request("POST", "http://www.reddit.com/api/login", "user="+ widget.preferences["username"] + "&passwd=" + widget.preferences["passwd"]);
+        is_logged_in = (resp.indexOf("WRONG_PASSWORD") == -1 && resp.indexOf("invalid password") == -1);
+    }
+}
+
+var t = null;
+function LoginAndUpdateStatus() {
+    clearInterval(t);
+    loginReddit();
+    if (is_logged_in) {
+        setButtonTo(theButton);
+        updateStatus();
+        t = setInterval("updateStatus()", parseInt(widget.preferences["update_freq"]));
+    }
+    else {
+        setToLoginMode();
+    }
+}
+
+function setToLoginMode() {
+    clearInterval(t);
+    is_logged_in = false;
+    setButtonTo(theButtonPopup);
+    theCurrentButton.badge.textContent = "Login";
+    theCurrentButton.title = "Reddit Envelope: Waiting for login";
+}
+
+function ForceUpdateStatus() {
+    if (!is_logged_in)
+        return;
+    clearInterval(t);
+    updateStatus();
+    t = setInterval("updateStatus()", parseInt(widget.preferences["update_freq"]));
+}
+
+function setButtonTo(bt) {
+    var current_button = opera.contexts.toolbar.item(0);
+    if (current_button == bt)
+        return;
+    if (current_button != null)
+        opera.contexts.toolbar.removeItem(current_button);
+    opera.contexts.toolbar.addItem(bt);
+    theCurrentButton = bt;
+}
+   
+window.addEventListener("load", function(){
+    //Create button without popup (currently in opera, once button is defined with popup, there's no way to turn off popup
+    var ToolbarUIItemProperties = {
+      title: "Reddit Envelope: Me Gusta",
+      icon: no_unread_message_icon,
+      badge: {
+                display: "block",
+                textContent: "Hi :D",
+                color: "rgba(64,64,64,1)",
+                backgroundColor: "rgba(206, 227, 248, 1)"
+      },        
+    }        
+    theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
+    theButton.onclick = function(event) {
+        opera.postError("Onclicked");
+        if (!is_logged_in)
+            return;
+        if (theButton.icon == has_unread_message_icon || widget.preferences["click_icon_for"] == "inbox") {
+            opera.extension.tabs.create({url:"http://www.reddit.com/message/inbox/",focused:true})
+            theButton.icon = no_unread_message_icon;
+        }
+        else {
+            ForceUpdateStatus();
+        }
+    }
+    
+    //create button WITH popup, used when user's not logged in
+    var ToolbarUIItemPropertiesWithPopup = Object.extend({}, ToolbarUIItemProperties);
+    ToolbarUIItemPropertiesWithPopup["popup"] = {
+        href: "popup.html",
+        width: 200,
+        height: 125,
+    };
+    theButtonPopup = opera.contexts.toolbar.createItem(ToolbarUIItemPropertiesWithPopup);
+            
+    opera.extension.onmessage = function(event){
+       if (event.data == "LOGIN") {
+           LoginAndUpdateStatus();
+       }
+    }
+
+    setButtonTo(theButtonPopup);
+    LoginAndUpdateStatus();
+
+  }, false);
       
-    </script>
-  </head>
-  <body>
-  </body>
-</html>
+</script></head><body></body></html>

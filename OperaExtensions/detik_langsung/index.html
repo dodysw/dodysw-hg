@@ -5,13 +5,13 @@ var pt1 = /^\s\s*/;
 var pt2 = /\s\s*$/;
 
 opera.extension.onmessage = function(event) {
-    if (event.data == "INCSKIP") {
+    var request = JSON.parse(event.data)
+    if (request.cmd == "INCSKIP") {
         increment_skiped_count();
     }
-    else if (event.data.substr(0,2) == "##") {
-        var tempsplit = event.data.split("##",3);
-        var title = tempsplit[1];
-        var href = tempsplit[2];
+    else if (request.cmd == "SOLVE") {
+        var title = request.title;
+        var href = request.href;
         if (cached_title_url[title] == undefined) {
             //query webpage, iterate it's title
             var xhr = new XMLHttpRequest();
@@ -22,6 +22,7 @@ opera.extension.onmessage = function(event) {
             var tempDiv = document.createElement('div');
             tempDiv.innerHTML = xhr.responseText;
             anchors = tempDiv.getElementsByTagName("a");
+
             var found = false;
             for (var i = 0; i < anchors.length; i++) {
                 var el = anchors[i];
@@ -40,13 +41,22 @@ opera.extension.onmessage = function(event) {
                 }
                 href = el.href;
                 increment_skiped_count();
-                break;
+                found = true;
             }
         }
         else {
             href = cached_title_url[title];
+            opera.postError("From cache:" + href);
         }
-        event.source.postMessage("REDIRECT##" + href);
+        event.source.postMessage(JSON.stringify({cmd:"REDIRECT", href:href}));
+    }
+    else if (request.cmd == "INIT") {
+        if (widget.preferences["skipped_count"] == undefined) {
+            widget.preferences["skipped_count"] = 0;
+        }
+        opera.postError("Count: " + widget.preferences["skipped_count"]);
+        var skipped_count = parseInt(widget.preferences["skipped_count"]) + 1;
+        event.source.postMessage(JSON.stringify({cmd:"COUNT", skipped_count:skipped_count}));
     }
 }
 
@@ -54,8 +64,4 @@ function increment_skiped_count() {
     widget.preferences["skipped_count"] = parseInt(widget.preferences["skipped_count"]) + 1;
 }
 
-opera.extension.onconnect = function(){
-    var skipped_count = parseInt(widget.preferences["skipped_count"]) + 1;
-    event.source.postMessage("COUNT##" + skipped_count);
-};
 </script></head><body></body></html>

@@ -61,7 +61,7 @@ function link_clicked(e) {
 function init_extension() {
     for (var i = 0; i < document.links.length; i++) {
         var link = document.links[i];
-        if (link.target == "_blank" || link.href.search(pattern) == -1 || link.parentNode.className == "hnews")
+        if (link.innerText.length <= 2 || link.target == "_blank" || link.href.search(pattern) == -1 || link.parentNode.className == "hnews")
             continue;
         link.onclick = link_clicked;
     }

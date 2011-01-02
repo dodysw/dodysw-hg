@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Reddit Envelope Configuration</title>
+  	<style>
+  		body, input {font: 14px verdana, arial, sans-serif; text-align:center;}
+  		#author a {color:#777777; text-decoration:none;}
+  		.advanced {border:1px solid; width:400px; margin-left:auto; margin-right:auto;background-color:#eeeeee;}
+  	</style>
+  	<script type="text/javascript" src="preferences.js"></script>
+  </head>
+  <body>
+    <h1 id="title"></h1>
+    <p id="author"></p>
+    <img src="logo.png"/>
+    <form>
+  	<p>Reddit Username<br/><input type="text" name="username"><br/>
+  	Password<br/><input type="password" name="passwd"><br/>
+  	<br/><input type="submit" value="Save"/>
+  	</p>
+  	<div class="advanced">
+  	<h3>Advanced Settings</h3>
+  	<p>
+  	Check status every (minute)<br/><input type="text" name="update_freq" size="5"><br/>
+  	<br/>
+  	When envelope is gray, clicking icon will...<br/>
+  	<input type="radio" name="click_icon_for" value="inbox" id="click_icon_for_inbox"><label for="click_icon_for_inbox">Open inbox</label>
+  	<input type="radio" name="click_icon_for" value="update" id="click_icon_for_update"><label for="click_icon_for_update">Check status now</label><br/>
+  	<small>Note: orangered envelope will always open inbox</small>
+  	</p>
+  	</div>
+  	</form>
+    <p><span id="version"></span> <span id="widgetid"></span></p>
+  </body>
+</html>

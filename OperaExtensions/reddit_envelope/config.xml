@@ -7,5 +7,6 @@
   	<preference name="username" value=""/>
   	<preference name="passwd" value=""/>
   	<preference name="update_freq" value="60000"/>
+  	<preference name="click_icon_for" value="inbox"/>
   	<access origin="http://www.reddit.com"/>
 </widget>

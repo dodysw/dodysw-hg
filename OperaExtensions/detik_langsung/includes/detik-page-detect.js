@@ -1,6 +1,6 @@
 // ==UserScript==
-// @include http://us.detik.com/
-// @include http://www.detik.com/
+// @include http://us.detik.com/*
+// @include http://www.detik.com/*
 // ==/UserScript==
 var pattern = /\.com\/(sepakbola)?\??[^\/]*$/;
 var skipped_count;
@@ -48,39 +48,38 @@ function link_clicked(e) {
 
     if (found_href) {
         opera.postError("Direct found!");
-        opera.extension.postMessage("INCSKIP");
+        opera.extension.postMessage(JSON.stringify({cmd:"INCSKIP"}));
         window.stop();
         window.location.href = found_href;
     }
     else {
         //ask bg process to look forward on channel portal page
-        opera.extension.postMessage("##" + this.innerText + "##" + this.href)
+        opera.extension.postMessage(JSON.stringify({cmd:"SOLVE", title:this.innerText, href:this.href}));
     }    
     return false;
 }
 
 opera.extension.onmessage = function(event){
-  var message  = event.data;
-  opera.postError("background process sent: " + message);
-  var temp = message.split("##",2);
-  var code = temp[0];
-  var value = temp[1];
-  if (code == "COUNT") {
-    skipped_count = value;
-  }
-  else if (code == "REDIRECT") {
-    window.stop();
-    window.location.href = value;
-  }
+    opera.postError("background process sent: " + event.data);
+    var respose = JSON.parse(event.data);
+    if (respose.cmd == "COUNT") {
+        skipped_count = respose.skipped_count;
+    }
+    else if (respose.cmd == "REDIRECT") {
+        window.stop();
+        window.location.href = respose.href;
+    }
 };
 
 function init_extension() {
     for (var i = 0; i < document.links.length; i++) {
         var link = document.links[i];
-        if (link.target == "_blank" || link.href.search(pattern) == -1 || link.parentNode.className == "hnews")
+        if (link.innerText.length <= 2 || link.target == "_blank" || link.href.search(pattern) == -1 || link.parentNode.className == "hnews")
             continue;
         link.onclick = link_clicked;
     }
+    opera.postError("Injected script initialized");
 }
 
 window.addEventListener("DOMContentLoaded", init_extension, false);
+opera.extension.postMessage(JSON.stringify({cmd:"INIT"}));
