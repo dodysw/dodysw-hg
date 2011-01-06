@@ -33,7 +33,7 @@ function updateStatus() {
 function request(method, url, params) {
     var old_badge = theCurrentButton.badge.textContent;
     theCurrentButton.badge.textContent = "...";
-    opera.postError('Request ' + method + ' to ' + url + ' params ' +params);
+//     opera.postError('Request ' + method + ' to ' + url + ' params ' +params);
     var xhr = new XMLHttpRequest();
     xhr.open(method,url,false);
     if (method == "POST") {
@@ -108,7 +108,7 @@ window.addEventListener("load", function(){
     }        
     theButton = opera.contexts.toolbar.createItem(ToolbarUIItemProperties);
     theButton.onclick = function(event) {
-        opera.postError("Onclicked");
+//         opera.postError("Onclicked");
         if (!is_logged_in)
             return;
         if (theButton.icon == has_unread_message_icon || widget.preferences["click_icon_for"] == "inbox") {
