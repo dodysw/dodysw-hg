@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.0 r9654"
+   sodipodi:docname="dsw-logo.svg">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="35.265958 : 535.61268 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="779.36044 : 535.61268 : 1"
+       inkscape:persp3d-origin="407.3132 : 360.21898 : 1"
+       id="perspective3045" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="2.4386123"
+     inkscape:cx="192.28767"
+     inkscape:cy="617.56622"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1127"
+     inkscape:window-height="768"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     style="display:inline">
+    <text
+       sodipodi:linespacing="125%"
+       id="text2993"
+       y="433.36911"
+       x="148.77646"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Apple LiGothic;-inkscape-font-specification:Sans Bold"
+       xml:space="preserve"
+       inkscape:export-filename="/Users/milda/Desktop/dswlogo.png"
+       inkscape:export-xdpi="902.58002"
+       inkscape:export-ydpi="902.58002"><tspan
+         style="font-size:72px"
+         id="tspan2995"
+         y="433.36911"
+         x="148.77646"
+         sodipodi:role="line">dsw</tspan></text>
+    <g
+       sodipodi:type="inkscape:box3d"
+       style="fill:#f9f9f9"
+       id="g3047"
+       inkscape:perspectiveID="#perspective3045"
+       inkscape:corner0="0.99841186 : 0.43176891 : 0 : 1"
+       inkscape:corner7="0.93863032 : 0.41416241 : 0.028627709 : 1"
+       inkscape:export-filename="/Users/milda/Desktop/dswlogo.png"
+       inkscape:export-xdpi="902.58002"
+       inkscape:export-ydpi="902.58002">
+      <path
+         sodipodi:type="inkscape:box3dside"
+         id="path3059"
+         style="fill:#e9e9ff;fill-rule:evenodd;stroke:none"
+         inkscape:box3dsidetype="11"
+         d="m 229.31691,390.27185 5.89687,-3.84344 0,8.94977 -5.89687,3.57949 z" />
+      <path
+         sodipodi:type="inkscape:box3dside"
+         id="path3049"
+         style="fill:#353564;fill-rule:evenodd;stroke:none"
+         inkscape:box3dsidetype="6"
+         d="m 221.43741,388.46003 0,8.81024 7.8795,1.6874 0,-8.68582 z" />
+      <path
+         sodipodi:type="inkscape:box3dside"
+         id="path3051"
+         style="fill:#4d4d9f;fill-rule:evenodd;stroke:none"
+         inkscape:box3dsidetype="5"
+         d="m 221.43741,388.46003 5.74097,-3.95607 8.0354,1.92445 -5.89687,3.84344 z" />
+      <path
+         sodipodi:type="inkscape:box3dside"
+         id="path3057"
+         style="fill:#afafde;fill-rule:evenodd;stroke:none"
+         inkscape:box3dsidetype="13"
+         d="m 221.43741,397.27027 5.74097,-3.68438 8.0354,1.79229 -5.89687,3.57949 z" />
+      <path
+         sodipodi:type="inkscape:box3dside"
+         id="path3055"
+         style="fill:#d7d7ff;fill-rule:evenodd;stroke:none"
+         inkscape:box3dsidetype="14"
+         d="m 227.17838,384.50396 0,9.08193 8.0354,1.79229 0,-8.94977 z" />
+      <path
+         sodipodi:type="inkscape:box3dside"
+         id="path3053"
+         style="fill:#8686bf;fill-rule:evenodd;stroke:none"
+         inkscape:box3dsidetype="3"
+         d="m 221.43741,388.46003 5.74097,-3.95607 0,9.08193 -5.74097,3.68438 z" />
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Apple LiGothic;-inkscape-font-specification:Sans Bold"
+       x="148.77647"
+       y="-434.33743"
+       id="text3126"
+       sodipodi:linespacing="125%"
+       transform="scale(1,-1)"
+       inkscape:export-filename="/Users/milda/Desktop/dswlogo.png"
+       inkscape:export-xdpi="902.58002"
+       inkscape:export-ydpi="902.58002"><tspan
+         sodipodi:role="line"
+         x="148.77647"
+         y="-434.33743"
+         id="tspan3128"
+         style="font-size:72px">dsw</tspan></text>
+  </g>
+</svg>

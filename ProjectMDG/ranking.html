@@ -1,0 +1,46 @@
+<html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
+<link href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="ajax.js"></script>
+<script>
+function fetch_ranking() {
+    var resp = request("GET", api_server+"api.php?do=ranking");
+    if (!resp) return;
+    resp = JSON.parse(resp);
+    var table = '<br/><table width="100%"><tr><th>#</th><th>Name</th><th>Score</th><th>Country</th><th>Last play</th></tr>';
+    if (resp["status"] == "ok") {
+        for (var i in resp["ranks"]) {
+            var ranker = resp["ranks"][i];
+            var flag_img = "n/a";
+            if (ranker["country"]) {
+                flag_img = '<img src="flag/' + ranker["country"].toLowerCase() + '.png">';
+            }
+
+            table += "<tr><td align='center'>" + (parseInt(i)+1) + "</td><td><a name='" + ranker["username"] + "'>" + ranker["username"]+ "</a></td><td align='center'>" + 
+                ranker["score"]+ "</td><td align='center'>" + flag_img + "</td><td align='center'>" + ranker["last_activity"] + " days</td></tr>";
+        }
+        table += "</table>";
+        document.getElementById("ranking").innerHTML = table;
+    }
+}
+addListener("load", window, function(){    
+    fetch_profile();
+    fetch_ranking();
+});
+</script>
+</head>
+<body>
+<div id="header"></div>
+<div id="content">
+    <div id="login"></div><br/>
+    <span id="title">Top MDG Heroes are...</span>
+    <div id="ranking"></div>
+    <form>
+    </form>
+    <p><a href="client.html">Back to quiz</a></p>
+    <hr width="200px"/>
+    <div id="footnote">Project MDG. Copyright 2011, <a href="http://code.google.com/p/dodysw-hg">Dody Suria Wijaya</a>. Uses <a href="http://data.worldbank.org/data-catalog/millennium-development-indicators">MDG subset</a> of WDI dataset provided by <a href="http://www.worldbank.org/">The World Bank</a>.</div>
+</div>
+</body>
+</html>

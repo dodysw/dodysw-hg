@@ -1,0 +1,77 @@
+<?php
+/*
+Which of the following countries has the [highest|lowest] [series] between 1990 and 2008
+    select `series code`, `series name` from MDG_Series order by rand() limit 1
+
+select `country name`,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009 from MDG_Data where `series code`=%%
+select `country name` from MDG_Country order by RAND() limit 3
+
+Which of the following number is nearest to [series] of [country] at year [year]
+
+Which [goal|target] does [indicator] related to
+goal:
+select `series name`, `goal` as answer from MDG_Series order by RAND() limit 1
+select goal from MDG_Series group by goal
+select substring(goal,9) from MDG_Series where goal != 'Other' group by goal order by rand() limit 3
+select substring(target,12) from MDG_Series where target != 'None' group by target order by rand() limit 3
+
+
+Which of the following countries is located on region [region]
+
+The currency unit of [country] is
+
+Which of the following countries income group is [income group]
+
+
+
+
+
+
+
+UPDATE SCRIPT
+update MDG_Data set highest=greatest(`1990`,`1991`,`1992`,`1993`,`1994`,`1995`,`1996`,`1997`,`1998`,`1999`,`2000`,`2001`,`2002`,`2003`,`2004`,`2005`,`2006`,`2007`,`2008`
+)
+
+CREATE TABLE IF NOT EXISTS `MDG_Data_y` (
+  `Country Code` varchar(3) NOT NULL DEFAULT '',
+  `Series Code` varchar(17) NOT NULL DEFAULT '',
+  `Year` int(11) NOT NULL,
+  `Value` float DEFAULT NULL,
+  PRIMARY KEY (`Country Code`,`Series Code`,`Year`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+update MDG_Data set lowest=least(`1990`,`1991`,`1992`,`1993`,`1994`,`1995`,`1996`,`1997`,`1998`,`1999`,`2000`,`2001`,`2002`,`2003`,`2004`,`2005`,`2006`,`2007`,`2008`
+)
+insert into MDG_Data_y select `country code`, `series code`, 1991, `1991` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 1992, `1992` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 1993, `1993` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 1994, `1994` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 1995, `1995` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 1996, `1996` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 1997, `1997` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 1998, `1998` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 1999, `1999` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2000, `2000` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2001, `2001` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2002, `2002` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2003, `2003` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2004, `2004` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2005, `2005` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2006, `2006` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2007, `2007` from MDG_Data
+insert into MDG_Data_y select `country code`, `series code`, 2008, `2008` from MDG_Data
+
+update mdg_data_y set `series code`='SL.EMP.TOTL.SP.FE.ZS' where `series code`='SL.EMP.TOTL.SP.FE';
+update mdg_data_y set `series code`='SL.EMP.TOTL.SP.MA.ZS' where `series code`='SL.EMP.TOTL.SP.MA';
+update mdg_data_y set `series code`='SL.EMP.1524.SP.FE.ZS' where `series code`='SL.EMP.1524.SP.FE';
+update mdg_data_y set `series code`='SL.EMP.1524.SP.MA.ZS' where `series code`='SL.EMP.1524.SP.MA';
+update mdg_data_y set `series code`='SE.ADT.1524.LT.FE.ZS' where `series code`='SE.ADT.1524.LT.FE';
+update mdg_data_y set `series code`='SE.ADT.1524.LT.MA.ZS' where `series code`='SE.ADT.1524.LT.MA';
+update mdg_data_y set `series code`='SH.HIV.1524.KW.FE.ZS' where `series code`='SH.HIV.1524.KW.FE';
+update mdg_data_y set `series code`='SH.HIV.1524.KW.MA.ZS' where `series code`='SH.HIV.1524.KW.MA';
+update mdg_data_y set `series code`='EG.USE.COMM.GD.PP.KD' where `series code`='EG.USE.COMM.GD.PP';
+
+
+
+*/
+?>

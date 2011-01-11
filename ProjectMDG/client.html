@@ -1,0 +1,24 @@
+<html>
+<head>
+<link href="style.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Neucha' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="ajax.js"></script>
+<script>
+addListener("load", window, function(){    
+    fetch_profile();
+    get_nextset_question();
+});
+</script>
+</head>
+<body>
+<div id="header"></div>
+<div id="content">
+    <div id="login"></div>
+    <p id="question"></p>
+    <form>
+    </form>    
+    <hr width="200px"/>
+    <div id="footnote">Project MDG. Copyright 2011, <a href="http://code.google.com/p/dodysw-hg">Dody Suria Wijaya</a>. Uses <a href="http://data.worldbank.org/data-catalog/millennium-development-indicators">MDG subset</a> of WDI dataset provided by <a href="http://www.worldbank.org/">The World Bank</a>.</div>
+</div>
+</body>
+</html>

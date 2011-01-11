@@ -1,0 +1,9 @@
+<?php
+
+$DB_HOST = "127.0.0.1";
+$DB_NAME = "projectmdg_db";
+$DB_USER = "mdguser";
+$DB_PASS = "mdgpass";
+
+
+?>
