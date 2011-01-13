@@ -11,7 +11,6 @@ window.addEventListener("load", function(){
     if (option_page) {
         document.getElementById("title").innerText = window.widget.name;
         document.getElementById("version").innerText = "version " + window.widget.version;
-        document.getElementById("widgetid").innerText = "id# " + window.widget.id;
         document.getElementById("author").innerHTML = "<a href='" + window.widget.authorHref + "'>By " + window.widget.author + "</a>";
         if (widget.preferences["update_freq"])
             el["update_freq"].value = parseInt(parseInt(widget.preferences["update_freq"]) / ms_to_minute_ratio);

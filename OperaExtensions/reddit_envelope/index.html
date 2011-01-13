@@ -139,5 +139,11 @@ window.addEventListener("load", function(){
     LoginAndUpdateStatus();
 
   }, false);
-      
+
+//init widget preference values (i don't trust config.xml default value)
+if (!widget.preferences["update_freq"])
+    widget.preferences["update_freq"] = 60000;
+if (!widget.preferences["click_icon_for"])
+    widget.preferences["click_icon_for"] = "inbox";
+    
 </script></head><body></body></html>
