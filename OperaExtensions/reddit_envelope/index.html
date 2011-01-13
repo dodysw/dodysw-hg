@@ -49,7 +49,7 @@ function request(method, url, params) {
 function loginReddit() {
     is_logged_in = false;
     if (widget.preferences["username"] && widget.preferences["passwd"]) {
-        var resp = request("POST", "http://www.reddit.com/api/login", "user="+ widget.preferences["username"] + "&passwd=" + widget.preferences["passwd"]);
+        var resp = request("POST", "http://www.reddit.com/api/login", "user="+ encodeURIComponent(widget.preferences["username"]) + "&passwd=" + encodeURIComponent(widget.preferences["passwd"]));
         is_logged_in = (resp.indexOf("WRONG_PASSWORD") == -1 && resp.indexOf("invalid password") == -1);
     }
 }
