@@ -1,73 +1,94 @@
-var pattern = /\.com\/(sepakbola)?\??[^\/]*$/;
-var skipped_count;
+var DEBUG = false;
+/*---browser specific functions---*/
+function log (msg) {if (DEBUG) console.log(msg);}
+function sendRequest(msg) {chrome.extension.sendRequest(msg);}
+/*---end of browser specific functions---*/
 
-function popUp(vis, msg) {
-    var tbody = document.getElementsByTagName("body")[0];
-    var popup = document.getElementById('darkenScreenObjectPopup');
-    var opacity = "80";var opaque = (opacity / 100);
-    if (!popup) {
-        var popnode = document.createElement('div');
-            popnode.style.position = 'fixed';
-            popnode.style.bottom = "20px";
-            popnode.style.left = "2px";
-            popnode.style.padding = "0px";
-            popnode.style.paddingLeft = "10px";
-            popnode.style.paddingRight = "10px";
-            popnode.style.backgroundColor = "yellow";
-            popnode.style.opacity = opaque;
-            popnode.style.MozOpacity = opaque;
-            popnode.style.zIndex = "60";
-            popnode.style.borderStyle = "dashed";
-            popnode.style.display = 'none';
-            popnode.id = 'darkenScreenObjectPopup';
-            popnode.innerHTML = msg;
-        tbody.appendChild(popnode);
-        popup = document.getElementById('darkenScreenObjectPopup');  // Get the object.
-    }
-    popup.style.display = vis? 'block': 'none';
-}
-
+var signaturedl = "Detik Langsung melangsungkan link ini!";
+var p_su = /\.com\/(sepakbola)?\??[^\/]*$/;
+var block1 = /(tv)|(suarapembaca)|\.detik\.com\/*$/;
+var block2 = /\.com\/(infoanda)|(beritaterpopuler)|(video)|(indeks)\??[^\/]*$/;
+var ulinks = [];
 
 function link_clicked(e) {
-    //on some occasion, real links is supplied at the same page on different part, let's check that first
-    var found_href = false;
-    var anchors = document.getElementsByTagName("a");
-    for (var i = 0; i < anchors.length; i++) {
-        var el = anchors[i];
-        if (el.innerText.indexOf(this.innerText) ==  -1 || el.href.search(pattern) > -1) continue;
-        found_href = el.href;
-        break;
+    sendRequest({cmd:"SOLVE", title:this.innerText, href:this.href, meta_key:e.metaKey});
+    if (e.metaKey)
+        return false;
+    return true;
+}
+function solve_remaining_links_cb(resp)  {
+    for (var i=ulinks.length-1;i>=0; i--) {
+        var link = ulinks[i];
+        if (link.innerText in resp.titles) {
+            link.href = resp.titles[link.innerText];
+            link.title = signaturedl;
+            link.onclick = undefined;
+            log("Deleting " + link.innerText + " because backend found the href");
+            delete ulinks[i];
+        }
+        else {
+            //defer until user's click
+            link.onclick = resp.bind_onlick? link_clicked : undefined;
+        }
     }
-    
-    console.log("Clicked: " + this.innerText);
-    popUp(true, '<span style="color:red;font:13px verdana;"><b>DETIK LANGSUNG</b></span> <span style="color:green;font:13px verdana">Telah membantu <b>' + skipped_count + '</b> kali</span>');
-
-    if (found_href) {
-        console.log("Direct found!");
-        chrome.extension.sendRequest({cmd:"INCSKIP"});
-        window.stop();
-        window.location.href = found_href;
-    }
-    else {
-        //ask bg process to look forward on channel portal page
-        chrome.extension.sendRequest({cmd:"SOLVE", title:this.innerText, href:this.href}, function (response) {
-            window.stop();
-            window.location.href = response.href;
-        });
-    }    
-    return false;
+}
+function solve_remaining_links(bind_onclick) {
+    log("Solving " + ulinks.length + " remaining links");
+    var utitles = {};
+    for (var key in ulinks) utitles[ulinks[key].innerText] = ulinks[key].href;
+    sendRequest({cmd:"SOLVECACHE", utitles:utitles, bind_onclick:bind_onclick});
 }
 
 function init_extension() {
-    for (var i = 0; i < document.links.length; i++) {
-        var link = document.links[i];
-        if (link.innerText.length <= 2 || link.target == "_blank" || link.href.search(pattern) == -1 || link.parentNode.className == "hnews")
+    log("Init at URL " + document.location.href);
+    
+    //first pass, collect all news links with "real" urls and short urls
+    var real_link_title = {};
+    var short_link = [];
+    var anchors = document.getElementsByTagName("a");
+    for (var i = 0; i < anchors.length; i++) {
+        var link = anchors[i];
+        if (link.innerText.length > 10 && link.href.search(p_su) == -1 ) {
+            real_link_title[link.innerText] = link.href;
             continue;
-        link.onclick = link_clicked;
+        }
+        if (link.innerText.length > 12 && link.host != 'twitter.com' && link.target != "_blank" && 
+            link.href.search(p_su) > -1 && link.parentNode.className != "hnews" &&
+            link.href.search(block1) == -1 && link.href.search(block2) == -1) { 
+            short_link.push(link);
+        }
+    }
+
+    //now iterate short links, try to solve it locally
+    for (var i = 0; i < short_link.length; i++) {
+        var link = short_link[i];
+        if (link.innerText in real_link_title) {
+            link.href = real_link_title[link.innerText];
+            link.title = signaturedl; 
+            continue;
+        }
+        ulinks.push(link);
+    }
+    delete real_link_title;
+    //third pass, ask background for immediate resolving from available cache
+    solve_remaining_links(true);
+}
+
+function handle_request(request) {
+    if (!("cmd" in request)) return;
+    switch (request.cmd) {
+        case "REDIRECT":
+            window.location.href = request.href;
+            break;
+        case "RSOLVECACHE":
+            solve_remaining_links_cb(request);
+            break;
+        case "REFRESHLINK":
+            log("Content script received message");
+            solve_remaining_links(false);
+            break;
     }
 }
 
+chrome.extension.onRequest.addListener(function(request, sender, senderResponse) { handle_request(request);senderResponse(null);});
 init_extension();
-chrome.extension.sendRequest({cmd:"INIT"}, function (response) {
-    skipped_count = response.skipped_count;
-});

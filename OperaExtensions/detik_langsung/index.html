@@ -1,67 +1,135 @@
-<!doctype html>
-<html lang="en"><head><script>
-var cached_title_url = new Array();
-var pt1 = /^\s\s*/;
-var pt2 = /\s\s*$/;
+<html><script>
+var DEBUG = false;
+/*---browser specific functions---*/
+function log (msg) {if (DEBUG) opera.postError(msg);}
+function createtab(url,focused) {opera.extension.tabs.create({url:url,focused:focused});}
+function sendRequest(sender,msg) {sender.postMessage(JSON.stringify(msg));}
+/*---end of browser specific functions---*/
+var PRELOADING = true;
+var preloading_delay = 1000;
+log("BG!");
+var cached_title_url = {};
+var pt1 = /^\s\s*/; var pt2 = /\s\s*$/;
+var queue_resolving = {};
+var resolved_titles = {};
+var jobcounter = 0;
 
-opera.extension.onmessage = function(event) {
-    var request = JSON.parse(event.data)
-    if (request.cmd == "INCSKIP") {
-        increment_skiped_count();
+function parse_page(body, href) {
+    //use temporary div trick to parse DOM
+    var tempDiv = document.createElement('div');
+    tempDiv.innerHTML = body;
+    anchors = tempDiv.getElementsByTagName("a");
+    for (var i=0;i<anchors.length;i++) {
+        var el = anchors[i];
+        if (el.href.indexOf("/read/") == -1 && el.href.indexOf("/readfoto/") == -1) continue;
+        if (el.protocol == "widget:") {
+            //fix relative url, use anchor object to help me parse url
+            var a = document.createElement("a");
+            a.href = href;
+            el.protocol = a.protocol;
+            el.hostname = a.hostname;
+            el.port = a.port;
+        }
+        cached_title_url[el.innerText.replace(pt1, '').replace(pt2, '')] = el.href;
+    }
+}
+
+function retrieve_portal(href) {
+    log("Req:" + href);
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", href, false);
+    xhr.send();
+    parse_page(xhr.responseText, href); 
+}
+
+function retrieve_portal_async(href, callback) {
+    log("Req:" + href);
+    jobcounter++;
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState != 4) return;
+        jobcounter--;
+        if (xhr.status != 200) return;
+        parse_page(xhr.responseText, href); 
+        log(href + " done");
+        callback();
+    };
+    xhr.open("GET", href, true);
+    xhr.send();
+}
+
+function getHrefByTitleHref(title, href) {
+    if (!(title in cached_title_url)) {
+        retrieve_portal(href);
+    }
+    if (title in cached_title_url)
+        href = cached_title_url[title];
+    return href;
+}
+
+function handle_message(request, sender, senderResponse) {
+    log("Receive:" + request.cmd);
+    if (request.cmd == "SOLVECACHE") {
+        var rtitles = {};
+        for (var key in request.utitles) {
+            if (!request.utitles.hasOwnProperty(key)) continue;
+            if (key in cached_title_url) {
+                rtitles[key] = cached_title_url[key];
+            }
+            else {
+                //add host+path for preloader job
+                if (PRELOADING) {
+                    if (key in resolved_titles) {
+                        log("Title " + key + " has already been tried before");
+                    }
+                    else {
+                        resolved_titles[key] = 1;
+                        var d = request.utitles[key].split('?',1);
+                        log("Adding " + d[0] + " to queue because title:" + key);
+                        if (!(d[0] in queue_resolving)) {
+                            queue_resolving[d[0]] = request.utitles[key];
+                        }
+                    }
+                }
+            }
+        }
+        
+        if (PRELOADING) {
+            var notify_callback = function() {sendRequest(sender,{cmd:"REFRESHLINK"});};
+            setTimeout(function() {preloading_job(notify_callback);}, preloading_delay);
+        }
+        sendRequest(sender, {cmd:"RSOLVECACHE",titles:rtitles,bind_onclick:request.bind_onclick});
     }
     else if (request.cmd == "SOLVE") {
         var title = request.title;
         var href = request.href;
-        if (cached_title_url[title] == undefined) {
-            //query webpage, iterate it's title
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", href, false);
-            xhr.send();
-            
-            //use temporary div trick to parse DOM
-            var tempDiv = document.createElement('div');
-            tempDiv.innerHTML = xhr.responseText;
-            anchors = tempDiv.getElementsByTagName("a");
-
-            var found = false;
-            for (var i = 0; i < anchors.length; i++) {
-                var el = anchors[i];
-                if (el.href.indexOf("/read/") > -1) {
-                    cached_title_url[el.innerText.replace(pt1, '').replace(pt2, '')] = el.href;
-                }
-                if (found) continue;
-                if (el.innerText.indexOf(title) ==  -1) continue;
-                if (el.protocol == "widget:") {
-                    //fix relative url, use anchor object to help me parse url
-                    var a = document.createElement("a");
-                    a.href = href;
-                    el.protocol = a.protocol;
-                    el.hostname = a.hostname;
-                    el.port = a.port;
-                }
-                href = el.href;
-                increment_skiped_count();
-                found = true;
-            }
+        if (request.meta_key) {
+            //open the channel page, just so that user has something to see while waiting
+            var href_r = getHrefByTitleHref(title, href);
+            //opera does not support changing a tab's property without an injected script. So we deliberately designed it differently here.
+            createtab(href_r,false);
+            log("New tab created");
         }
         else {
-            href = cached_title_url[title];
-            opera.postError("From cache:" + href);
+            var href_r = getHrefByTitleHref(title, href);
+            sendRequest(sender, {cmd:"REDIRECT",href:href_r}); //opera!
         }
-        event.source.postMessage(JSON.stringify({cmd:"REDIRECT", href:href}));
     }
-    else if (request.cmd == "INIT") {
-        if (widget.preferences["skipped_count"] == undefined) {
-            widget.preferences["skipped_count"] = 0;
-        }
-        opera.postError("Count: " + widget.preferences["skipped_count"]);
-        var skipped_count = parseInt(widget.preferences["skipped_count"]) + 1;
-        event.source.postMessage(JSON.stringify({cmd:"COUNT", skipped_count:skipped_count}));
-    }
+    senderResponse({}); //all chrome request handler must return a response!
 }
 
-function increment_skiped_count() {
-    widget.preferences["skipped_count"] = parseInt(widget.preferences["skipped_count"]) + 1;
-}
+opera.extension.onmessage = function (event) {handle_message(JSON.parse(event.data), event.source, function() {})};
 
-</script></head><body></body></html>
+function preloading_job(notify_callback) {
+    log("Preloading job run");
+    for (var key in queue_resolving) {
+        retrieve_portal_async(queue_resolving[key], function() {
+            if (jobcounter == 0) {
+                //notify content script that there are new links found
+                notify_callback();
+            }
+        });
+    }
+    queue_resolving = {};   //clear it
+}
+</script></html>

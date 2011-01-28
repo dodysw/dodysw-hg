@@ -1,12 +1,12 @@
 {
   "name": "Detik Langsung",
-  "version": "1.0",
+  "version": "2.0",
   "description": "Di situs detikcom, klik headline berita detikFinance, detikHot, Sepakbola, dst. langsung ke isi beritanya.",
 
   "background_page": "index.html",
   "content_scripts": [
     {
-        "matches": ["http://us.detik.com/*", "http://www.detik.com/*"],
+        "matches": ["http://us.detik.com/", "http://www.detik.com/", "http://us.detik.com/?*", "http://www.detik.com/?*"],
         "js": ["detik-page-detect.js"]
     }
   ],
@@ -14,6 +14,7 @@
             "48":   "detik_langsung_48.png",
             "128":  "detik_langsung_128.png"},
   "permissions": [
+    "tabs",
     "http://*.detik.com/*",
     "http://*.detikinet.com/*",
     "http://*.detikfinance.com/*",
