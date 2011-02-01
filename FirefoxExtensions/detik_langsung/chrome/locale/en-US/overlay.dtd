@@ -1,0 +1,8 @@
+<!ENTITY DetikLangsung.label "Your localized menuitem">
+<!ENTITY DetikLangsungContext.label "Your Menuitem">
+<!ENTITY DetikLangsungContext.accesskey "Y">
+<!ENTITY DetikLangsungToolbarButton.label "Your Toolbar Button">
+<!ENTITY DetikLangsungToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY DetikLangsungSidebar.label "Your Sidebar">
+<!ENTITY DetikLangsungToolbar.name  "example">
+<!ENTITY DetikLangsungToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &DetikLangsungToolbar.name;">

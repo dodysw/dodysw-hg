@@ -1,0 +1,27 @@
+#https://developer.mozilla.org/en/Chrome_Registration
+
+#content packagename uri/to/files/ [flags]
+#This will register a location to use when resolving the URI chrome://packagename/content/.... 
+#The URI may be absolute or relative to the location of the manifest file. Note: it must end with an '/'.
+
+content   DetikLangsung                 chrome/content/
+
+#skin packagename skinname uri/to/files/ [flags]
+#This will register a skin package when resolving the URI chrome://packagename/skin/... . 
+#The skinname is an opaque string identifying an installed skin. If more than one skin is registered 
+#for a package, the chrome registry will select the best-fit skin using the user's preferences.
+
+skin      DetikLangsung   classic/1.0   chrome/skin/
+
+#locale packagename localename uri/to/files/ [flags]
+#This will register a locale package when resolving the URI chrome://packagename/locale/... . 
+#The localename is usually a plain language identifier "en" or a language-country identifier "en-US". 
+#If more than one locale is registered for a package, the chrome registry will select the best-fit locale using the user's preferences.
+locale    DetikLangsung   en-US         chrome/locale/en-US/
+
+#XUL overlays are registered with the following syntax:
+#overlay chrome://URI-to-be-overlaid chrome://overlay-URI [flags]
+overlay   chrome://browser/content/browser.xul   chrome://DetikLangsung/content/ff-overlay.xul
+
+#Style overlays (custom CSS which will be applied to a chrome page) are registered with the following syntax:
+#style chrome://URI-to-style chrome://stylesheet-URI [flags]
