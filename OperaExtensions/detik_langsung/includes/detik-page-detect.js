@@ -13,76 +13,80 @@ function sendRequest(msg) {opera.extension.postMessage(JSON.stringify(msg));}
 
 var signaturedl = "Detik Langsung melangsungkan link ini!";
 var p_su = /\.com\/(sepakbola)?\??[^\/]*$/;
-var block1 = /(tv)|(suarapembaca)|\.detik\.com\/*$/;
-var block2 = /\.com\/(infoanda)|(beritaterpopuler)|(video)|(indeks)\??[^\/]*$/;
+var block1 = /(tv|suarapembaca)\.detik\.com\/.*$/;
+var block2 = /\.com\/(infoanda|beritaterpopuler|video|indeks)\??[^\/]*$/;
 var ulinks = [];
+var anchors;
 
 function link_clicked(e) {
-    sendRequest({cmd:"SOLVE", title:this.innerText, href:this.href, meta_key:e.metaKey});
-    if (e.metaKey)
-        return false;
-    return false;   //opera!
+    //opera does not support meta fucking Key, force to load on same page!
+    sendRequest({cmd:"SOLVE", title:this.textContent, href:this.href, meta_key:e.metaKey});
+    this.textContent = "Tunggu ya, detik langsung mikir dulu...";
+    e.stopPropagation();
+    return false;
 }
 function solve_remaining_links_cb(resp)  {
     for (var i=ulinks.length-1;i>=0; i--) {
-        var link = ulinks[i];
-        if (link.innerText in resp.titles) {
-            link.href = resp.titles[link.innerText];
+        var link = anchors[ulinks[i]];
+        if (link.textContent in resp.titles) {
+            link.href = resp.titles[link.textContent];
             link.title = signaturedl;
             link.onclick = undefined;
-            log("Deleting " + link.innerText + " because backend found the href");
+            log("Deleting " + link.textContent + " because backend found the href");
             delete ulinks[i];
         }
         else {
             //defer until user's click
-            link.onclick = resp.bind_onlick? link_clicked : undefined;
+            link.onclick = resp.bind_onclick? link_clicked : undefined;
         }
     }
 }
 function solve_remaining_links(bind_onclick) {
     log("Solving " + ulinks.length + " remaining links");
     var utitles = {};
-    for (var key in ulinks) utitles[ulinks[key].innerText] = ulinks[key].href;
+    for (var key in ulinks) utitles[anchors[ulinks[key]].textContent] = anchors[ulinks[key]].href;
     sendRequest({cmd:"SOLVECACHE", utitles:utitles, bind_onclick:bind_onclick});
 }
 
 function init_extension() {
     log("Init at URL " + document.location.href);
+    anchors = document.getElementsByTagName("a");
     
     //first pass, collect all news links with "real" urls and short urls
     var real_link_title = {};
     var short_link = [];
-    var anchors = document.getElementsByTagName("a");
     for (var i = 0; i < anchors.length; i++) {
         var link = anchors[i];
-        if (link.innerText.length > 10 && link.href.search(p_su) == -1 ) {
-            real_link_title[link.innerText] = link.href;
+        if (link.textContent.length > 10 && link.href.search(p_su) == -1 ) {
+            real_link_title[link.textContent] = link.href;
             continue;
         }
-        if (link.innerText.length > 12 && link.host != 'twitter.com' && link.target != "_blank" && 
+        if (link.textContent.length > 12 && link.host != 'twitter.com' && link.target != "_blank" && 
             link.href.search(p_su) > -1 && link.parentNode.className != "hnews" &&
             link.href.search(block1) == -1 && link.href.search(block2) == -1) { 
-            short_link.push(link);
+            short_link.push(i);
         }
     }
 
     //now iterate short links, try to solve it locally
     for (var i = 0; i < short_link.length; i++) {
-        var link = short_link[i];
-        if (link.innerText in real_link_title) {
-            link.href = real_link_title[link.innerText];
+        var link = anchors[short_link[i]];
+        if (link.textContent in real_link_title) {
+            link.href = real_link_title[link.textContent];
             link.title = signaturedl; 
             continue;
         }
-        ulinks.push(link);
+        ulinks.push(short_link[i]);
     }
-    delete real_link_title;
+    real_link_title = null;
+    short_link = null;
     //third pass, ask background for immediate resolving from available cache
     solve_remaining_links(true);
 }
 
 function handle_request(request) {
     if (!("cmd" in request)) return;
+    log("IS Received: " + request.cmd);
     switch (request.cmd) {
         case "REDIRECT":
             window.location.href = request.href;

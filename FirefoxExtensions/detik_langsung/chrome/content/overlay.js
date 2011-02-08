@@ -106,8 +106,9 @@ var DetikLangsung = {
     for (var i=this.ulinks.length-1; i>=0; i--) {
         var link = this.ulinks[i];
         var title = link.textContent;
-        if (title in this.cached_title_url) {
-            link.href = this.cached_title_url[title];
+        var trimmed_title = trim(title);
+        if (trimmed_title in this.cached_title_url) {
+            link.href = this.cached_title_url[trimmed_title];
             link.title = this.signaturedl;
             link.removeEventListener("click", DetikLangsung.link_clicked, false);
             this.ulinks.splice(i,1);
@@ -128,8 +129,9 @@ var DetikLangsung = {
     for (var i=this.ulinks.length-1;i>=0; i--) {
         var link = this.ulinks[i];
         var title = link.textContent;
-        if (title in this.cached_title_url) {
-            link.href = this.cached_title_url[title];
+        var trimmed_title = trim(title);
+        if (trimmed_title in this.cached_title_url) {
+            link.href = this.cached_title_url[trimmed_title];
             link.title = this.signaturedl;
             link.removeEventListener("click", DetikLangsung.link_clicked, false);
             this.ulinks.splice(i,1);
@@ -144,7 +146,7 @@ var DetikLangsung = {
   link_clicked: function (e) {
     DetikLangsung.log("Link click meta:" + e.metaKey);
     DetikLangsung.solve(this.textContent, this.href, e.metaKey);
-    e.cancelBubble = true;
+    e.stopPropagation();
     return false;
   },
   
@@ -165,12 +167,13 @@ var DetikLangsung = {
   },
 
   getHrefByTitleHref: function (title, href, callback) {
-    if (title in this.cached_title_url) {
-        callback(this.cached_title_url[title]);
+    var trimmed_title = trim(title);
+    if (trimmed_title in this.cached_title_url) {
+        callback(this.cached_title_url[trimmed_title]);
         return;
     }
     this.retrieve_portal_async(href, function() {
-        callback(DetikLangsung.cached_title_url[title] || href);
+        callback(DetikLangsung.cached_title_url[trimmed_title] || href);
     });
   },
 

@@ -2,14 +2,13 @@
 var DEBUG = false;
 /*---browser specific functions---*/
 function log (msg) {if (DEBUG) opera.postError(msg);}
-function createtab(url,focused) {opera.extension.tabs.create({url:url,focused:focused});}
+function createtab(url,focused) {return opera.extension.tabs.create({url:url,focused:focused});}
 function sendRequest(sender,msg) {sender.postMessage(JSON.stringify(msg));}
 /*---end of browser specific functions---*/
 var PRELOADING = true;
 var preloading_delay = 1000;
 log("BG!");
 var cached_title_url = {};
-var pt1 = /^\s\s*/; var pt2 = /\s\s*$/;
 var queue_resolving = {};
 var resolved_titles = {};
 var jobcounter = 0;
@@ -30,7 +29,7 @@ function parse_page(body, href) {
             el.hostname = a.hostname;
             el.port = a.port;
         }
-        cached_title_url[el.innerText.replace(pt1, '').replace(pt2, '')] = el.href;
+        cached_title_url[trim(el.textContent)] = el.href;
     }
 }
 
@@ -59,11 +58,12 @@ function retrieve_portal_async(href, callback) {
 }
 
 function getHrefByTitleHref(title, href) {
-    if (!(title in cached_title_url)) {
+    var trimmed_title = trim(title);
+    if (!(trimmed_title in cached_title_url)) {
         retrieve_portal(href);
     }
-    if (title in cached_title_url)
-        href = cached_title_url[title];
+    if (trimmed_title in cached_title_url)
+        href = cached_title_url[trimmed_title];
     return href;
 }
 
@@ -71,23 +71,24 @@ function handle_message(request, sender, senderResponse) {
     log("Receive:" + request.cmd);
     if (request.cmd == "SOLVECACHE") {
         var rtitles = {};
-        for (var key in request.utitles) {
-            if (!request.utitles.hasOwnProperty(key)) continue;
-            if (key in cached_title_url) {
-                rtitles[key] = cached_title_url[key];
+        for (var ori_key in request.utitles) {
+            if (!request.utitles.hasOwnProperty(ori_key)) continue;
+            var trimmed_key = trim(ori_key);
+            if (trimmed_key in cached_title_url) {
+                rtitles[ori_key] = cached_title_url[trimmed_key];
             }
             else {
                 //add host+path for preloader job
                 if (PRELOADING) {
-                    if (key in resolved_titles) {
-                        log("Title " + key + " has already been tried before");
+                    if (ori_key in resolved_titles) {
+                        log("Title " + ori_key + " has already been tried before");
                     }
                     else {
-                        resolved_titles[key] = 1;
-                        var d = request.utitles[key].split('?',1);
-                        log("Adding " + d[0] + " to queue because title:" + key);
+                        resolved_titles[ori_key] = 1;
+                        var d = request.utitles[ori_key].split('?',1);
+                        log("Adding " + d[0] + " to queue because title:" + ori_key);
                         if (!(d[0] in queue_resolving)) {
-                            queue_resolving[d[0]] = request.utitles[key];
+                            queue_resolving[d[0]] = request.utitles[ori_key];
                         }
                     }
                 }
@@ -103,16 +104,17 @@ function handle_message(request, sender, senderResponse) {
     else if (request.cmd == "SOLVE") {
         var title = request.title;
         var href = request.href;
-        if (request.meta_key) {
+        if (request.meta_key) { //currently opera does not support meta key, so this never always false
             //open the channel page, just so that user has something to see while waiting
+            var tab = createtab("redirect.html",false);
+            log("New tab created");
             var href_r = getHrefByTitleHref(title, href);
             //opera does not support changing a tab's property without an injected script. So we deliberately designed it differently here.
-            createtab(href_r,false);
-            log("New tab created");
+            tab.update({url: href_r});
         }
         else {
             var href_r = getHrefByTitleHref(title, href);
-            sendRequest(sender, {cmd:"REDIRECT",href:href_r}); //opera!
+            opera.extension.tabs.getFocused().update({url: href_r});
         }
     }
     senderResponse({}); //all chrome request handler must return a response!
@@ -132,4 +134,19 @@ function preloading_job(notify_callback) {
     }
     queue_resolving = {};   //clear it
 }
+
+//(trim17 http://yesudeep.wordpress.com/2009/07/31/even-faster-string-prototype-trim-implementation-in-javascript/
+WhiteSpace = []; WhiteSpace[0x0009] = true; WhiteSpace[0x000a] = true; WhiteSpace[0x000b] = true; WhiteSpace[0x000c] = true; WhiteSpace[0x000d] = true; WhiteSpace[0x0020] = true; WhiteSpace[0x0085] = true; WhiteSpace[0x00a0] = true; WhiteSpace[0x1680] = true; WhiteSpace[0x180e] = true; WhiteSpace[0x2000] = true; WhiteSpace[0x2001] = true; WhiteSpace[0x2002] = true; WhiteSpace[0x2003] = true; WhiteSpace[0x2004] = true; WhiteSpace[0x2005] = true; WhiteSpace[0x2006] = true; WhiteSpace[0x2007] = true; WhiteSpace[0x2008] = true; WhiteSpace[0x2009] = true; WhiteSpace[0x200a] = true; WhiteSpace[0x200b] = true; WhiteSpace[0x2028] = true; WhiteSpace[0x2029] = true; WhiteSpace[0x202f] = true; WhiteSpace[0x205f] = true; WhiteSpace[0x3000] = true;
+function trim(str){
+    var len = str.length;
+    if (len) {
+        var whiteSpace = WhiteSpace, i = 0;
+        while (whiteSpace[str.charCodeAt(--len)]);
+        if (++len)
+            while (whiteSpace[str.charCodeAt(i)]){ ++i; }
+        str = str.substring(i, len);
+    }
+    return str;
+}
+
 </script></html>
