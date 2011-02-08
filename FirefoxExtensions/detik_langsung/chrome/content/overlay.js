@@ -4,7 +4,7 @@ var DetikLangsung = {
     //PARAM
     exact_matches:        ["http://us.detik.com/", "http://www.detik.com/"],
     beginwith_matches:    ["http://us.detik.com/?","http://www.detik.com/?"],
-    DEBUG: false,
+    DEBUG: true,
     signaturedl:  "Detik Langsung melangsungkan link ini!",
     p_su:         /\.com($|\/(sepakbola)?\??[^\/]*$)/,
     block1:       /(tv|suarapembaca)\.detik\.com\/.*$/,
@@ -106,7 +106,7 @@ var DetikLangsung = {
     for (var i=this.ulinks.length-1; i>=0; i--) {
         var link = this.ulinks[i];
         var title = link.textContent;
-        var trimmed_title = trim(title);
+        var trimmed_title = this.trim(title);
         if (trimmed_title in this.cached_title_url) {
             link.href = this.cached_title_url[trimmed_title];
             link.title = this.signaturedl;
@@ -129,7 +129,7 @@ var DetikLangsung = {
     for (var i=this.ulinks.length-1;i>=0; i--) {
         var link = this.ulinks[i];
         var title = link.textContent;
-        var trimmed_title = trim(title);
+        var trimmed_title = this.trim(title);
         if (trimmed_title in this.cached_title_url) {
             link.href = this.cached_title_url[trimmed_title];
             link.title = this.signaturedl;
@@ -167,7 +167,7 @@ var DetikLangsung = {
   },
 
   getHrefByTitleHref: function (title, href, callback) {
-    var trimmed_title = trim(title);
+    var trimmed_title = this.trim(title);
     if (trimmed_title in this.cached_title_url) {
         callback(this.cached_title_url[trimmed_title]);
         return;
