@@ -4,7 +4,7 @@ var DetikLangsung = {
     //PARAM
     exact_matches:        ["http://us.detik.com/", "http://www.detik.com/"],
     beginwith_matches:    ["http://us.detik.com/?","http://www.detik.com/?"],
-    DEBUG: true,
+    DEBUG: false,
     signaturedl:  "Detik Langsung melangsungkan link ini!",
     p_su:         /\.com($|\/(sepakbola)?\??[^\/]*$)/,
     block1:       /(tv|suarapembaca)\.detik\.com\/.*$/,
