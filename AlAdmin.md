@@ -1,6 +1,6 @@
 # Introduction #
 
-Al-Admin is a drop in php scripts and framework that provides instant administrative back-end/management console for any web site with MySQL. Allowing you to create [crud](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) forms for your tables rapidly. Used by actual sites such as [1](http://code.google.com/p/dodysw/source/browse/trunk/yayasankelola), [2](http://code.google.com/p/dodysw/source/browse/trunk/web_utils/mediamonitoring/), [3](http://code.google.com/p/dodysw/source/browse/trunk/ciscopip), [4](http://code.google.com/p/dodysw/source/browse/trunk/shopping/).
+Al-Admin is a drop in php scripts and framework that provides instant administrative back-end/management console for any web site with MySQL. Allowing you to create [crud](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) forms for your tables rapidly. Used by actual sites such as [1](https://github.com/dodysw/dodysw-svn/tree/master/yayasankelola), [2](https://github.com/dodysw/dodysw-svn/tree/master/web_utils/mediamonitoring/), [3](https://github.com/dodysw/dodysw-svn/tree/master/ciscopip), [4](https://github.com/dodysw/dodysw-svn/tree/master/shopping/).
 
 The intention of Al-Admin was similar to [Django Python](http://www.djangoproject.com)'s automatic admin module, although Al-Admin came alot earlier and at the time when ORM was not common yet.
 
@@ -38,4 +38,4 @@ Search functionalities built-in to all tables, with selectable field scope
 
 # Source Code #
 
-[Al-Admin source code](http://code.google.com/p/dodysw/source/browse/trunk/web_utils/aladmin/index.php) is available. Warning, it has not been updated since 2005.
+[Al-Admin source code](https://github.com/dodysw/dodysw-svn/tree/master/web_utils/aladmin) is available. Warning, it has not been updated since 2005.
