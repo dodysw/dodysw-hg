@@ -2,25 +2,25 @@ I am a software programmer expatriating in Twin cities, MN, with a blend of ente
 
 ### Web Projects
 
-* [ProjectMDG](ProjectMDG.md): Personal Project, 2011
-* [Detik Usable](DetikUsable.md): Personal Project, 2002-2005
-* [Al-Admin](AlAdmin.md): Freelance Project, 2003-2004
-* [survey](Survey.md): Freelance Project, 2004
+* [ProjectMDG](pages/ProjectMDG.md): Personal Project, 2011
+* [Detik Usable](pages/DetikUsable.md): Personal Project, 2002-2005
+* [Al-Admin](pages/AlAdmin.md): Freelance Project, 2003-2004
+* [survey](pages/Survey.md): Freelance Project, 2004
 * [Image Browser](https://github.com/dodysw/dodysw-svn/tree/master/imagebrowser): Freelance Project, 2004
 
 ### Browser Extension
 * [FreedomPop Monitor](https://chrome.google.com/webstore/detail/freedompop-monitor/dfplgeelekjgcjdmheemjhejccmkecmp): Personal Project, 2012
-* [Detik Langsung](DetikLangsungExtension.md): Personal Project, 2011
-* [Reddit Envelope](RedditEnvelopeExtension.md): Personal Project, 2010-2011
+* [Detik Langsung](pages/DetikLangsungExtension.md): Personal Project, 2011
+* [Reddit Envelope](pages/RedditEnvelopeExtension.md): Personal Project, 2010-2011
 
 ### Mash-Ups
-* [Gudang Terasi](GudangTerasi.md): Personal Project, 2010
+* [Gudang Terasi](pages/GudangTerasi.md): Personal Project, 2010
 * [ajaxfeed](http://code.google.com/p/gdata-python-client-ajax-feed/): Personal Project, 2009
-* [Direct Connect Bots](DirectConnectBots.md): Personal Project, 2005-2006
-* [Popok](Popok.md): Personal Project, 2003-2004
+* [Direct Connect Bots](pages/DirectConnectBots.md): Personal Project, 2005-2006
+* [Popok](pages/Popok.md): Personal Project, 2003-2004
 
 ### Business Apps
-* [KPI Digital Signage](KpiDigitalSignage.md): Premier Oil Indonesia, 2009-2010
+* [KPI Digital Signage](pages/KpiDigitalSignage.md): Premier Oil Indonesia, 2009-2010
 * [Business Advance and Expense Report](http://i.imgur.com/Lwc5z.png): Premier Oil Indonesia, 2010
 * [Electronic Drawing Management System](http://i.imgur.com/t9Yp0.png): Freeport Indonesia, 2009
 * [Integrated Management of Change](http://i.imgur.com/gYUO6.png): BP Indonesia, 2009
@@ -28,13 +28,13 @@ I am a software programmer expatriating in Twin cities, MN, with a blend of ente
 
 ### Mobile Apps
 * [Mazda iPad](http://dodysw.imgur.com/mazda_zoom_zoom): Mazda Indonesia, 2010 (w/ [WebX-Press](http://www.webx-press.com/))
-* [Tukang Twitter](TukangTwitter.md): Personal Project, 2010
-* [pyNetMony with OUI](PynetmonyOuiPatch.md): Personal Project, 2010
+* [Tukang Twitter](pages/TukangTwitter.md): Personal Project, 2010
+* [pyNetMony with OUI](pages/PynetmonyOuiPatch.md): Personal Project, 2010
 
 ### Others
-* [Network Utilities](NetworkUtilities.md): Personal Tools, 2000-2006
-* [File System Utilities](FileSystemUtilities.md): Personal Tools, 2003-Now
-* [Application Localizations](ApplicationLocalization.md): Personal Projects, 2005-2006
+* [Network Utilities](pages/NetworkUtilities.md): Personal Tools, 2000-2006
+* [File System Utilities](pages/FileSystemUtilities.md): Personal Tools, 2003-Now
+* [Application Localizations](pages/ApplicationLocalization.md): Personal Projects, 2005-2006
 
 ### Work Places (USA)
 * [Consultis](http://www.consultis.com/): Minnesota, 2014-
