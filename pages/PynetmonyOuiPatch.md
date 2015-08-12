@@ -12,4 +12,4 @@ This great app was written in Python.
 
 # Source Code #
 
-The [patched source of PyNetMony](http://code.google.com/p/dodysw-hg/source/browse/PyNetMony) including the OUI database is available.
+The [patched source of PyNetMony](https://github.com/dodysw/dodysw-hg/tree/master/PyNetMony) including the OUI database is available.

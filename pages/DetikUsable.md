@@ -50,4 +50,4 @@ Maintained over 2.5 years until detik.com finally offers rss feed of all their n
 
 # Source Code #
 
-[Source code for detik.usable](http://code.google.com/p/dodysw/source/browse/trunk/web_utils/detik.usable/detik_usable.php) is available. Note: the development has been discontinued since 2005.
+[Source code for detik.usable](https://github.com/dodysw/dodysw-svn/tree/master/web_utils/detik.usable/detik_usable.php) is available. Note: the development has been discontinued since 2005.

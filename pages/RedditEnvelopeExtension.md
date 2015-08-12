@@ -11,4 +11,4 @@ You can download latest version from [Reddit Envelope Opera Extension](https://a
 
 # Source Code #
 
-[Reddit envelope source code](http://code.google.com/p/dodysw-hg/source/browse/OperaExtensions/reddit_envelope/) is available.
+[Reddit envelope source code](https://github.com/dodysw/dodysw-hg/tree/master/OperaExtensions/reddit_envelope/) is available.

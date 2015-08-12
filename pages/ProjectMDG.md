@@ -12,6 +12,6 @@ One instance has been prepared on [mdg.comlu.com](http://mdg.comlu.com/client.ht
 
 ## Source Code ##
 
-You can view all [source codes](http://code.google.com/p/dodysw-hg/source/browse/ProjectMDG/) of this apps.
+You can view all [source codes](https://github.com/dodysw/dodysw-hg/tree/master/ProjectMDG/) of this apps.
 
 [![](http://appsfordevelopment.s3.amazonaws.com/AppsForDev_291x56.gif)](http://appsfordevelopment.challengepost.com/)

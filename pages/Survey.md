@@ -4,4 +4,4 @@ Survey is a drop in PHP script for online survey, including admin back-end to cr
 
 # Source #
 
-[Survey source code](http://code.google.com/p/dodysw/source/browse/trunk/web_utils/survey/) is available.
+[Survey source code](https://github.com/dodysw/dodysw-svn/tree/master/web_utils/survey/) is available.

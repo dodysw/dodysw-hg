@@ -10,6 +10,6 @@ This extension is available for [Google Chrome](https://chrome.google.com/websto
 
 # Source #
 
-Source codes are available for each browsers; [Google Chrome](http://code.google.com/p/dodysw-hg/source/browse/ChromeExtension/detik_langsung), [Opera](http://code.google.com/p/dodysw-hg/source/browse/OperaExtensions/detik_langsung/), and [Firefox](http://code.google.com/p/dodysw-hg/source/browse/FirefoxExtensions/detik_langsung/).
+Source codes are available for each browsers; [Google Chrome](https://github.com/dodysw/dodysw-hg/tree/master/ChromeExtension/detik_langsung), [Opera](https://github.com/dodysw/dodysw-hg/tree/master/OperaExtensions/detik_langsung/), and [Firefox](https://github.com/dodysw/dodysw-hg/tree/master/FirefoxExtensions/detik_langsung/).
 
-[![](http://code.google.com/chrome/webstore/images/branding/ChromeWebStore_Badge_206x63.png)](https://chrome.google.com/webstore/detail/ofbllkicbbbemdghnodmokhjpegnodok)
+[![](https://developer.chrome.com/webstore/images/ChromeWebStore_Badge_v2_206x58.png)](https://chrome.google.com/webstore/detail/ofbllkicbbbemdghnodmokhjpegnodok)

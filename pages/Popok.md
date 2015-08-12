@@ -20,4 +20,4 @@ What they says:
 
 # Source Code #
 
-[Source code for Popok](http://code.google.com/p/dodysw/source/browse/trunk/popok/) is available.
+[Source code for Popok](https://github.com/dodysw/dodysw-svn/tree/master/popok/) is available.
