@@ -1,6 +1,6 @@
 # Introduction #
 
-https://static.addons.mozilla.net/img/uploads/previews/thumbs/53/53586.png?modified=1296842549
+![Detik Langsung logo](https://static.addons.mozilla.net/user-media/previews/thumbs/53/53586.png)
 
 Detik Langsung is a browser extension to fix frontpage links in [detik.com](http://detik.com) to skip intermediary pages directly to the news content. For instance, a news about a soccer player initially linked to [Detik Sport channel homepage](http://www.detiksport.com/), forcing visitor to find the original news link again, by using this extension, it will not happen since the link points directly to its content.
 
