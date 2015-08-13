@@ -63,7 +63,7 @@ I am a software programmer expatriating in Twin cities, MN, with a blend of ente
 
 ### Online Activities
 * [Linked In](http://www.linkedin.com/in/dodysw): linkedin.com/in/dodysw
-* [Project Euler](http://projecteuler.net/): [dodysw](http://projecteuler.net/profile/dodysw.png)
+* [Project Euler](http://projecteuler.net/): dodysw<br/>![dodysw](http://projecteuler.net/profile/dodysw.png)
 * [Topcoder:](http://www.topcoder.com/tc?module=MemberProfile&cr=22916526) dodysw
 
 ### Resume
