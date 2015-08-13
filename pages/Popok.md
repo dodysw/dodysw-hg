@@ -14,9 +14,9 @@ What they says:
 
 # Diagram of Architecture #
 
-![http://dodysw.googlecode.com/svn/trunk/popok/docs/img/index.1.gif](http://dodysw.googlecode.com/svn/trunk/popok/docs/img/index.1.gif)
+![https://raw.githubusercontent.com/dodysw/dodysw-svn/master/popok/docs/img/index.1.gif](https://raw.githubusercontent.com/dodysw/dodysw-svn/master/popok/docs/img/index.1.gif)
 
-![http://dodysw.googlecode.com/svn/trunk/popok/docs/img/index.2.gif](http://dodysw.googlecode.com/svn/trunk/popok/docs/img/index.2.gif)
+![https://raw.githubusercontent.com/dodysw/dodysw-svn/master/popok/docs/img/index.2.gif](https://raw.githubusercontent.com/dodysw/dodysw-svn/master/popok/docs/img/index.2.gif)
 
 # Source Code #
 
