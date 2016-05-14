@@ -38,7 +38,7 @@ I am a software programmer expatriating in Twin cities, MN, with a blend of ente
 
 ### Work Places (USA)
 * [Consultis](http://www.consultis.com/): Minnesota, 2014-
-* [Best Buy](http://www.bestbuy.com): Richfield, Minnesota, 2011-2013, 2014-2015
+* [Best Buy](http://www.bestbuy.com): Richfield, Minnesota, 2011-2013, 2014-
 * [CWF Solutions](http://www.cwfsolutions.com/technology-services/): Minnesota, 2011-2013
 * [Kettle River Consulting](http://www.kettleriverconsulting.com/): Minnesota, 2011-2013
 
