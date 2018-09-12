@@ -1,4 +1,4 @@
-I am a software programmer expatriating in Twin cities, MN, with a blend of enterprise, web, and mobile development experience. My software interests includes rapid development lifecycle and safety critical, network and web mash-ups, business and enterprise apps, and mobile development. I graduated in 2007 from ANU holding MSE, and 2001 from UI holding BE in Electrical/Computer.
+I am a software programmer working in 3 countries, and currently based at Jakarta. My software interests includes rapid development lifecycle and safety critical, network and web mash-ups, business and enterprise apps, and mobile development. I graduated in 2007 from ANU holding MSE, and 2001 from UI holding BE in Electrical/Computer.
 
 ### Web Projects
 
@@ -37,8 +37,8 @@ I am a software programmer expatriating in Twin cities, MN, with a blend of ente
 * [Application Localizations](pages/ApplicationLocalization.md): Personal Projects, 2005-2006
 
 ### Work Places (USA)
-* [Consultis](http://www.consultis.com/): Minnesota, 2014-
-* [Best Buy](http://www.bestbuy.com): Richfield, Minnesota, 2011-2013, 2014-
+* [Consultis](http://www.consultis.com/): Minnesota, 2014-2018
+* [Best Buy](http://www.bestbuy.com): Richfield, Minnesota, 2011-2013, 2014-2018
 * [CWF Solutions](http://www.cwfsolutions.com/technology-services/): Minnesota, 2011-2013
 * [Kettle River Consulting](http://www.kettleriverconsulting.com/): Minnesota, 2011-2013
 
@@ -46,6 +46,7 @@ I am a software programmer expatriating in Twin cities, MN, with a blend of ente
 * [Enable Software](http://www.google.com/search?q=Enable+Software+Pty+Ltd&btnI): Canberra, ACT, 2005, 2006
 
 ### Work Places (Indonesia)
+* [Accenture](https://www.accenture.com/id-en/home): Jakarta, 2018
 * [The World Bank](http://www.google.com/search?q=World+Bank+Jakarta&btnI): Jakarta, 2014
 * [Premier Oil Indonesia](http://www.google.com/search?q=Premier+Oil+Indonesia&btnI): Jakarta, 2009-2010
 * [Indonesia Stock Exchange](http://www.google.com/search?q=Indonesia+Stock+Exchange&btnI): Jakarta, 2010
@@ -71,4 +72,4 @@ Request resume via [email](mailto:dody@cryptolab.net)
 
 ### Contact
 Email Address: [dody@cryptolab.net](mailto:dody@cryptolab.net)
-Phone Number: 612-516-3639
+Phone Number/Whatsapp: +1 612-516-3639
