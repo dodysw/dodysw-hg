@@ -64,7 +64,7 @@ I am a software programmer working in 3 countries, currently based at Jakarta. M
 
 ### Online Activities
 * [Linked In](http://www.linkedin.com/in/dodysw): linkedin.com/in/dodysw
-* [Hacker Rank][https://www.hackerrank.com/dodysw): dodysw
+* [Hacker Rank](https://www.hackerrank.com/dodysw): dodysw
 * [Project Euler](http://projecteuler.net/): dodysw<br/>![dodysw](http://projecteuler.net/profile/dodysw.png)
 * [Topcoder](http://www.topcoder.com/tc?module=MemberProfile&cr=22916526): dodysw
 
