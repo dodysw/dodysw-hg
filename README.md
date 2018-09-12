@@ -1,4 +1,4 @@
-I am a software programmer working in 3 countries, and currently based at Jakarta. My software interests includes rapid development lifecycle and safety critical, network and web mash-ups, business and enterprise apps, and mobile development. I graduated in 2007 from ANU holding MSE, and 2001 from UI holding BE in Electrical/Computer.
+I am a software programmer working in 3 countries, currently based at Jakarta. My software interests includes rapid development lifecycle and safety critical, network and web mash-ups, business and enterprise apps, and mobile development. I graduated in 2007 from ANU holding MSE, and 2001 from UI holding BE in Electrical/Computer.
 
 ### Web Projects
 
@@ -64,8 +64,9 @@ I am a software programmer working in 3 countries, and currently based at Jakart
 
 ### Online Activities
 * [Linked In](http://www.linkedin.com/in/dodysw): linkedin.com/in/dodysw
+* [Hacker Rank][https://www.hackerrank.com/dodysw): dodysw
 * [Project Euler](http://projecteuler.net/): dodysw<br/>![dodysw](http://projecteuler.net/profile/dodysw.png)
-* [Topcoder:](http://www.topcoder.com/tc?module=MemberProfile&cr=22916526) dodysw
+* [Topcoder](http://www.topcoder.com/tc?module=MemberProfile&cr=22916526): dodysw
 
 ### Resume
 Request resume via [email](mailto:dody@cryptolab.net)
